@@ -8,9 +8,10 @@ abstract final class SupabaseConstants {
   static const String urlDefineKey = 'SUPABASE_URL';
   static const String anonKeyDefineKey = 'SUPABASE_ANON_KEY';
 
-  // Table names from the implementation plan (§4). No tables exist yet —
-  // the Supabase project itself has not been created. These names are
-  // constants so M1+ data sources use one source of truth.
+  // Table names from the implementation plan (§4). The `profiles`
+  // table exists from M1 (see supabase/migrations/); the rest are
+  // created by later stages. These names are constants so data
+  // sources use one source of truth.
   static const String profilesTable = 'profiles';
   static const String clinicsTable = 'clinics';
   static const String vetsTable = 'vets';
