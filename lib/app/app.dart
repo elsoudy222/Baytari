@@ -1,3 +1,15 @@
+/// Root widget. Wires theme, locale, routing and the [AppCubit] together.
+/// No feature logic lives here.
+///
+/// How it works: `BlocProvider` creates the [AppCubit] from GetIt and
+/// calls `load()` once, so the persisted theme/language are read before
+/// the first frame. `BlocBuilder` then rebuilds the whole
+/// `MaterialApp.router` whenever the [AppState] changes — that is how a
+/// language or theme change in Settings instantly redraws the app.
+/// `onGenerateTitle` falls back to the constant app name if the
+/// localization delegate has not loaded yet (it never shows raw text).
+library;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,9 +21,6 @@ import '../core/theme/app_theme.dart';
 import '../injection_container.dart';
 import 'app_cubit.dart';
 import 'app_state.dart';
-
-/// Root widget. Wires theme, locale, routing and the [AppCubit] together.
-/// No feature logic lives here.
 class BaytariApp extends StatelessWidget {
   const BaytariApp({super.key});
 

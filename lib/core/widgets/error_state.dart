@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import '../extensions/context_extensions.dart';
 
 /// Shared error state with a retry action.
+///
+/// The title is always the localized generic error text; the
+/// *specific* message comes from the caller (usually the Failure's
+/// message, passed down from the Cubit). The retry button only appears
+/// when `onRetry` is given — a screen that cannot retry simply does
+/// not pass one, instead of showing a dead button. The icon colour
+/// comes from the theme (`context.colors.error`), so it follows the
+/// light/dark theme.
 class ErrorState extends StatelessWidget {
   const ErrorState({required this.message, this.onRetry, super.key});
 

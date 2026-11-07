@@ -11,6 +11,10 @@ import '../errors/exceptions.dart';
 /// configured and ready for any future REST endpoints, and its error
 /// mapping is unit-testable through [mapError].
 class ApiClient {
+  /// The Dio instance is injectable (`Dio? dio`) so tests can pass a
+  /// fake Dio — the client never reaches the real network in tests.
+  /// `LogInterceptor` logs requests/responses while developing; it
+  /// prints bodies, so it must be reviewed before a release build.
   ApiClient({Dio? dio}) : _dio = dio ?? Dio() {
     _dio.options
       ..connectTimeout = ApiConstants.connectTimeout
@@ -62,6 +66,14 @@ class ApiClient {
 
   /// Maps a [DioException] to a plain [AppException]. Kept public and
   /// static so it can be unit tested without a network call.
+  ///
+  /// The mapping is by *cause*, not by message text: timeouts and
+  /// connection errors become [NetworkException] (the user's internet),
+  /// 401/403 become [AuthException] (login/permission), any other HTTP
+  /// error becomes [ServerException] with the status code attached, and
+  /// a cancelled request is its own case so a user cancelling is not
+  /// reported as a network failure. Repositories will later map these
+  /// exceptions to the matching [Failure]s.
   static AppException mapError(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:

@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 ///
 /// Widgets must use `Theme.of(context).colorScheme` (or these constants
 /// via [AppTheme]) — never a hardcoded `Color(...)` in a widget.
+///
+/// The palette is deliberately small in M0: one teal seed colour
+/// generates the whole light and dark `ColorScheme` (see
+/// `light_theme.dart` / `dark_theme.dart`), so light and dark stay
+/// consistent by construction. `secondary` is defined for M1+ use
+/// (accents, highlights) and is not used by any M0 screen yet.
 abstract final class AppColors {
   /// Primary brand color: a calm teal, fitting a veterinary app.
   static const Color primary = Color(0xFF0F766E);

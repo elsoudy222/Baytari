@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 
 /// Centralized text styles. Widgets use these (or the theme's
 /// `textTheme`) instead of defining their own font sizes and weights.
+///
+/// `height` is a line-height multiplier (1.3–1.5), not pixels: it keeps
+/// Arabic text — which is taller than Latin text — from clipping.
+/// These styles are ready for M1+ screens; the M0 screens use the
+/// theme's `textTheme` (e.g. `headlineMedium`) instead.
 abstract final class AppTextStyles {
   static const TextStyle headline = TextStyle(
     fontSize: 24,

@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
-
 /// App-wide constants. No user-facing text lives here — all visible
 /// strings are in the ARB files under `core/localization/l10n`.
+///
+/// `abstract final class` is used on purpose: the class can never be
+/// instantiated and never subclassed, it is only a namespace for
+/// `static const` values.
+library;
+
+import 'package:flutter/material.dart';
+
 abstract final class AppConstants {
   static const String appName = 'Baytari';
 
@@ -15,7 +21,8 @@ abstract final class AppConstants {
 
   static const List<String> supportedLanguageCodes = <String>['ar', 'en'];
 
-  // SharedPreferences keys.
+  // SharedPreferences keys. The `baytari_` prefix keeps our keys
+  // separate from any other app/package that shares the same storage.
   static const String themeModeKey = 'baytari_theme_mode';
   static const String localeCodeKey = 'baytari_locale_code';
 }

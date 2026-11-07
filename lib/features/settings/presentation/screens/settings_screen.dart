@@ -8,6 +8,19 @@ import '../../../../core/extensions/context_extensions.dart';
 
 /// Settings screen (M0): language and theme, changed at runtime and
 /// persisted by [AppCubit] through `AppSettingsService`.
+///
+/// `context.read<AppCubit>()` is called *inside* the `BlocBuilder`
+/// builder on purpose: the Cubit is read once per rebuild, and the
+/// `BlocBuilder` itself listens to the state, so the dropdown and the
+/// segmented buttons always show the current saved values.
+///
+/// `initialValue:` (not `value:`): in this Flutter SDK the `value`
+/// parameter of `DropdownButtonFormField` is deprecated — `initialValue`
+/// sets the starting selection, and the widget keeps its own selection
+/// afterwards. The locale label is chosen with a simple check
+/// (`'ar'` → Arabic, anything else → English) because only two
+/// languages exist; when a third language is added, this must become
+/// a lookup instead of an if/else.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 

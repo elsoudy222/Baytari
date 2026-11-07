@@ -7,6 +7,11 @@ and Supabase.
 > **M0 scaffold only.** No feature code yet — auth, pets, vets,
 > appointments, schedule and dashboard land one at a time (M1–M5).
 > The full plan is in `../IMPLEMENTATION_PLAN.md`.
+>
+> **شرح M0 بالعربي:** `./M0_EXPLANATION_AR.md` — step-by-step Arabic
+> explanation of the startup flow, Clean Architecture, theme, language,
+> DI, Dio, Supabase demo mode, routing, and tests. Every Dart file in
+> `lib/` and `test/` also carries explanatory comments in English.
 
 ## Run
 
@@ -16,8 +21,8 @@ flutter gen-l10n        # regenerates lib/core/localization/generated/
 flutter run
 ```
 
-With a Supabase project configured (not created yet — M0 runs in demo
-mode without it):
+With a Supabase project configured (project: https://jzvwytisqravbqzzznfk.supabase.co — M0 runs in demo
+mode without these values):
 
 ```bash
 flutter run \
@@ -68,4 +73,4 @@ flutter test      # widget + unit tests for the home shell and AppCubit
 
 - M0: scaffold, theme, localization, routing, DI, Dio, Supabase
   service (not configured), home shell + settings — **done**.
-- M1: Auth + Profiles — next, once the Supabase project is created.
+- M1: Auth + Profiles — next, using the Supabase project above.

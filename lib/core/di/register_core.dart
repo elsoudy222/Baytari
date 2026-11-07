@@ -11,6 +11,14 @@ import '../services/supabase_service.dart';
 /// Feature registrations (M1+) are added in `injection_container.dart`
 /// after this function, in the same order: data source -> repository ->
 /// use case -> cubit.
+///
+/// Why three different registration types:
+/// - `registerSingleton` (SharedPreferences) — one instance already
+///   exists, created in `main.dart`; GetIt only stores it.
+/// - `registerLazySingleton` (services, ApiClient) — created once, the
+///   first time something asks for them, then reused everywhere.
+/// - `registerFactory` ([AppCubit]) — a *new* Cubit every time one is
+///   requested, so each `BlocProvider` gets its own independent Cubit.
 void registerCore(GetIt sl, SharedPreferences prefs) {
   sl.registerSingleton<SharedPreferences>(prefs);
 
