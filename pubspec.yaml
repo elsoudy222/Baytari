@@ -26,6 +26,10 @@ dependencies:
   shared_preferences: ^2.5.3
   # Routing.
   go_router: ^16.2.0
+  # Fonts — Cairo (user's choice, 2026-11-07) via google_fonts, so the
+  # font files are fetched from Google Fonts at runtime and cached;
+  # no binary font files need to live in the repo.
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:

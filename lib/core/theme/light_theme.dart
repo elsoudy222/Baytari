@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -12,6 +13,10 @@ import 'app_colors.dart';
 /// with the mint card colour, and filled buttons use the Figma teal
 /// with the Figma corner radius (12) and full-width padding. The dark
 /// theme mirrors this file on purpose, so the two themes stay in sync.
+///
+/// Font: Cairo (the user's choice) for Arabic and Latin alike, via
+/// `GoogleFonts.cairoTextTheme` — applied to the whole text theme so
+/// every widget inherits it without naming a font anywhere else.
 ThemeData buildLightTheme() {
   final ColorScheme colorScheme = ColorScheme.fromSeed(
     seedColor: AppColors.lightSeed,
@@ -21,6 +26,7 @@ ThemeData buildLightTheme() {
     useMaterial3: true,
     colorScheme: colorScheme,
     brightness: Brightness.light,
+    textTheme: GoogleFonts.cairoTextTheme(),
     scaffoldBackgroundColor: AppColors.background,
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.background,
