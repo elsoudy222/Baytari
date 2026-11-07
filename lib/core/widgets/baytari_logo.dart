@@ -1,17 +1,22 @@
-/// The Baytari logo (v3).
+/// The Baytari logo (v3, as SVG).
 ///
 /// Two pieces, for two sizes:
 /// - [BaytariLogoMark] — the icon only (dog + cat silhouette),
-///   cropped out of the v3 PNG into `assets/images/baytari_mark.png`
+///   traced from the v3 PNG into `assets/images/baytari_mark.svg`
 ///   with a transparent background, so it works on light and dark
 ///   screens. Used small, e.g. top-left on the onboarding and
 ///   auth pages.
 /// - [BaytariLogo] — the full wide lockup: the icon on the left,
 ///   the "Baytari" wordmark (bold, with an orange paw on the "i")
-///   and "بيطري" underneath, all inside `assets/images/baytari_logo.png`.
+///   and "بيطري" underneath, all inside `assets/images/baytari_logo.svg`.
 ///   Used large, e.g. on the splash screen. The wordmark is part of
 ///   the image itself, so this widget adds NO text underneath it —
 ///   adding it would duplicate the name twice.
+///
+/// The SVGs are vector traces of the v3 PNG (flat palette colours
+/// only, so the trace is exact): transparent background, sharp at
+/// any size, and — unlike the PNGs — they are text files, so they
+/// can be pushed to GitHub.
 ///
 /// v3 colours match the app palette exactly (no gradient, no brown):
 /// the dog is solid orange [#F15B2A], the cat is solid teal
@@ -25,10 +30,11 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/theme/app_colors.dart';
 
-/// The full Baytari logo: the v2 wide lockup PNG, nothing else.
+/// The full Baytari logo: the v3 wide lockup SVG, nothing else.
 class BaytariLogo extends StatelessWidget {
   const BaytariLogo({required this.height, super.key});
 
@@ -38,7 +44,7 @@ class BaytariLogo extends StatelessWidget {
   /// otherwise a 220-high logo would be ~660 wide and overflow.
   final double height;
 
-  /// Width-to-height ratio of the v3 lockup PNG (2640 x 864).
+  /// Width-to-height ratio of the v3 lockup (2640 x 864).
   static const double _lockupAspectRatio = 2640 / 864;
 
   @override
@@ -54,14 +60,15 @@ class BaytariLogo extends StatelessWidget {
           width = constraints.maxWidth;
           displayHeight = width / _lockupAspectRatio;
         }
-        return Image.asset(
-          'assets/images/baytari_logo.png',
+        // SVG (not PNG): sharp at any size, and pushable to GitHub.
+        return SvgPicture.asset(
+          'assets/images/baytari_logo.svg',
           width: width,
           height: displayHeight,
           fit: BoxFit.contain,
           // If the asset is ever missing, fall back to the small
           // mark so the screen still shows the brand.
-          errorBuilder: (context, error, stackTrace) =>
+          placeholderBuilder: (context) =>
               BaytariLogoMark(size: displayHeight),
         );
       },
@@ -79,14 +86,15 @@ class BaytariLogoMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'assets/images/baytari_mark.png',
+    // SVG mark (traced from the v3 PNG): sharp at any size.
+    return SvgPicture.asset(
+      'assets/images/baytari_mark.svg',
       width: size,
       height: size,
       fit: BoxFit.contain,
-      // If the cropped mark is ever missing, fall back to the
-      // vector pin mark drawn below (no asset needed).
-      errorBuilder: (context, error, stackTrace) => CustomPaint(
+      // While the vector loads, show the old pin mark instead of
+      // an empty box (no asset needed for the fallback).
+      placeholderBuilder: (context) => CustomPaint(
         size: Size(size, size),
         painter: _PinLogoPainter(),
       ),
