@@ -66,7 +66,14 @@ ON CONFLICT (id) DO NOTHING;
 -- is the first folder of the object path — the app uploads to
 -- `<user-id>/avatar.jpg`, so the first folder IS the user id, and
 -- the policy below lets a user touch only their own folder.
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+--
+-- NOTE (fixed 2026-11-07): there is NO "ALTER TABLE storage.objects
+-- ENABLE ROW LEVEL SECURITY" here on purpose. RLS is already enabled
+-- on storage.objects in every Supabase project, and the dashboard
+-- SQL editor role does not own that table, so that statement fails
+-- with "ERROR 42501: must be owner of table objects" and stops the
+-- whole migration. Creating/dropping policies below works fine
+-- from the SQL editor.
 
 -- Avatars: anyone can READ (public profiles), the owner can
 -- INSERT / UPDATE their own, and DELETE their own.
