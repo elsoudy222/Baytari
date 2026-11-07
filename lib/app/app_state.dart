@@ -1,10 +1,17 @@
+/// App-level state: theme mode, locale, and whether Supabase is
+/// configured. Held by [AppCubit] and consumed by [BaytariApp].
+///
+/// The state is immutable — it is never edited in place. Every change
+/// goes through [copyWith], which returns a *new* [AppState] with only
+/// the given fields replaced. [Equatable] compares the three fields in
+/// [props], so `BlocBuilder` rebuilds only when something actually
+/// changed (emitting an identical state does nothing).
+library;
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../core/constants/app_constants.dart';
-
-/// App-level state: theme mode, locale, and whether Supabase is
-/// configured. Held by [AppCubit] and consumed by [BaytariApp].
 class AppState extends Equatable {
   const AppState({
     this.themeMode = ThemeMode.system,

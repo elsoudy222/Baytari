@@ -25,6 +25,18 @@ class SupabaseService {
     return Supabase.instance.client;
   }
 
+  /// Initialises Supabase from the `--dart-define` values.
+  ///
+  /// `String.fromEnvironment` reads values baked in at *compile* time
+  /// (when you run `flutter run --dart-define ...`), not at runtime —
+  /// that is why the keys are never in a file in the repo and never
+  /// typed in chat.
+  ///
+  /// `publishableKey:` (not `anonKey:`): in supabase_flutter 2.18 the
+  /// parameter was renamed — the key itself is still the same anon /
+  /// publishable key from the Supabase dashboard, only the parameter
+  /// name changed. The `--dart-define` name stays `SUPABASE_ANON_KEY`
+  /// so the run command does not change.
   Future<void> initialize() async {
     const String url = String.fromEnvironment(
       SupabaseConstants.urlDefineKey,

@@ -11,6 +11,15 @@ import '../../../../core/widgets/app_button.dart';
 /// M0 placeholder home shell. It shows only localized strings and
 /// theme colors, and links to Settings where language and theme can be
 /// changed at runtime. Feature content lands here in M1+.
+///
+/// Layout, in order: `LayoutBuilder` measures the screen, then a
+/// `SingleChildScrollView` + `ConstrainedBox(minHeight: ...)` make the
+/// content scroll on small screens (and when the keyboard is open)
+/// while still filling the screen on large ones. The `BlocBuilder`
+/// wraps *only* the Supabase status card, so a theme/language change
+/// rebuilds just that card, not the whole screen. The button uses
+/// `context.go(AppRoutes.settings)` — declarative navigation through
+/// the central router, never `Navigator.push` with a hardcoded path.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

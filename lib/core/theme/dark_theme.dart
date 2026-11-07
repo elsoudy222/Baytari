@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 /// Material 3 dark theme.
+///
+/// Same structure as `buildLightTheme()` — only the seed colour and
+/// the brightness change. Keeping the two files mirrored is deliberate:
+/// any override added to one theme must be added to the other, or a
+/// widget will look different in dark mode for no reason.
 ThemeData buildDarkTheme() {
   final ColorScheme colorScheme = ColorScheme.fromSeed(
     seedColor: AppColors.darkSeed,

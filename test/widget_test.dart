@@ -1,3 +1,14 @@
+/// Widget tests for the M0 shell: the home screen and the settings screen.
+///
+/// Unlike the unit tests in `app_cubit_test.dart`, these tests build
+/// the real [BaytariApp] widget tree (`pumpWidget`) and interact with
+/// it like a user (`tap`, `pumpAndSettle`). `setUp` registers the
+/// dependencies in GetIt first — without it, `BaytariApp` would fail
+/// to find its [AppCubit]. `tearDown` calls `sl.reset()` so the
+/// singleton registrations do not leak from one test into the next
+/// (GetIt keeps its registrations for the whole test run otherwise).
+library;
+
 import 'package:baytari/app/app.dart';
 import 'package:baytari/injection_container.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,6 +25,11 @@ void main() {
     await sl.reset();
   });
 
+  // Proves the defaults end-to-end: Arabic strings on screen
+  // (title, welcome), the demo-mode banner (no Supabase keys in
+  // tests), and the entry point to Settings. The Arabic strings are
+  // asserted literally — if the ARB files or the default locale
+  // break, this test fails.
   testWidgets('home shell renders with Arabic default', (
     WidgetTester tester,
   ) async {
@@ -30,6 +46,9 @@ void main() {
     expect(find.text('الإعدادات'), findsOneWidget);
   });
 
+  // Proves navigation works: tapping the Settings button opens the
+  // settings screen, which must show both the language and the theme
+  // controls (Arabic label, light/dark options).
   testWidgets('settings screen opens and shows language and theme',
       (WidgetTester tester) async {
     await tester.pumpWidget(const BaytariApp());
