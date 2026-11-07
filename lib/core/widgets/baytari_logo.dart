@@ -1,90 +1,102 @@
-/// The Baytari logo.
+/// The Baytari logo (v3).
 ///
 /// Two pieces, for two sizes:
-/// - [BaytariLogoMark] — the pin mark only, drawn with [CustomPaint]
-///   (no extra dependency): a teal location pin with an orange dog
-///   face and a teal cat face inside, echoing the original pin mark
-///   in the Figma screenshots. Used small, e.g. top-left on the
-///   onboarding pages.
-/// - [BaytariLogo] — the full logo: the generated PNG
-///   (`assets/images/baytari_logo.png`, teal pin + dog + cat +
-///   "Baytari / بيطري" wordmark) plus the wordmark in text. Used
-///   large, e.g. on the splash screen.
+/// - [BaytariLogoMark] — the icon only (dog + cat silhouette),
+///   cropped out of the v3 PNG into `assets/images/baytari_mark.png`
+///   with a transparent background, so it works on light and dark
+///   screens. Used small, e.g. top-left on the onboarding and
+///   auth pages.
+/// - [BaytariLogo] — the full wide lockup: the icon on the left,
+///   the "Baytari" wordmark (bold, with an orange paw on the "i")
+///   and "بيطري" underneath, all inside `assets/images/baytari_logo.png`.
+///   Used large, e.g. on the splash screen. The wordmark is part of
+///   the image itself, so this widget adds NO text underneath it —
+///   adding it would duplicate the name twice.
 ///
-/// The wordmark text is never a hardcoded literal: the Latin name
-/// comes from [AppConstants.appName] and the Arabic name from the
-/// localized `appTitle` (which is "بيطري" in Arabic and "Baytari"
-/// in English, so the second line only shows when it differs).
+/// v3 colours match the app palette exactly (no gradient, no brown):
+/// the dog is solid orange [#F15B2A], the cat is solid teal
+/// [#3E8E83], the wordmark is "Bayt" in dark teal [#223F3C] +
+/// "tari" in teal [#3E8E83], the paw is vivid orange, and "بيطري"
+/// is teal. (v2 had a teal-to-orange gradient on the icon; v3
+/// replaced it with these solid palette colours.)
+/// If an image asset is ever missing, the widget falls back to the
+/// old vector pin mark drawn with [CustomPaint] instead of showing
+/// a broken-image box.
 library;
 
 import 'package:flutter/material.dart';
 
-import '../../core/constants/app_constants.dart';
-import '../../core/extensions/context_extensions.dart';
 import '../../core/theme/app_colors.dart';
 
-/// The full Baytari logo: generated PNG image + wordmark underneath.
+/// The full Baytari logo: the v2 wide lockup PNG, nothing else.
 class BaytariLogo extends StatelessWidget {
   const BaytariLogo({required this.height, super.key});
 
-  /// Total height of the logo image (the wordmark follows below it).
+  /// Desired height of the logo. The lockup is wide (about 3:1),
+  /// so on a narrow phone the width is capped to the space
+  /// available and the height shrinks to keep the aspect ratio —
+  /// otherwise a 220-high logo would be ~660 wide and overflow.
   final double height;
+
+  /// Width-to-height ratio of the v3 lockup PNG (2640 x 864).
+  static const double _lockupAspectRatio = 2640 / 864;
 
   @override
   Widget build(BuildContext context) {
-    final String arabicName = context.l10n.appTitle;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Image.asset(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        // The image keeps its own aspect ratio: width = height x 3.
+        // If that is wider than the space we have, shrink both
+        // dimensions together instead of overflowing.
+        double width = height * _lockupAspectRatio;
+        double displayHeight = height;
+        if (constraints.hasBoundedWidth && width > constraints.maxWidth) {
+          width = constraints.maxWidth;
+          displayHeight = width / _lockupAspectRatio;
+        }
+        return Image.asset(
           'assets/images/baytari_logo.png',
-          height: height,
+          width: width,
+          height: displayHeight,
           fit: BoxFit.contain,
-          // If the asset is ever missing, the wordmark below still
-          // identifies the app instead of a broken-image box.
+          // If the asset is ever missing, fall back to the small
+          // mark so the screen still shows the brand.
           errorBuilder: (context, error, stackTrace) =>
-              BaytariLogoMark(size: height * 0.6),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          AppConstants.appName,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            color: context.isDark ? AppColors.darkHeading : AppColors.heading,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        // In Arabic the localized title is "بيطري"; in English it is
-        // the same "Baytari", so the second line would be a duplicate.
-        if (arabicName != AppConstants.appName)
-          Text(
-            arabicName,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-      ],
+              BaytariLogoMark(size: displayHeight),
+        );
+      },
     );
   }
 }
 
-/// The pin mark only, drawn with CustomPaint (vector, no dependency).
+/// The icon mark only: the dog + cat silhouette from the v3 logo
+/// (solid orange dog, solid teal cat).
 class BaytariLogoMark extends StatelessWidget {
   const BaytariLogoMark({required this.size, super.key});
 
+  /// Width and height of the (square) mark image.
   final double size;
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size(size, size),
-      painter: _PinLogoPainter(),
+    return Image.asset(
+      'assets/images/baytari_mark.png',
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
+      // If the cropped mark is ever missing, fall back to the
+      // vector pin mark drawn below (no asset needed).
+      errorBuilder: (context, error, stackTrace) => CustomPaint(
+        size: Size(size, size),
+        painter: _PinLogoPainter(),
+      ),
     );
   }
 }
 
-/// Draws the pin: teal pin body, white inner circle, orange dog head
-/// (left) and teal cat head with ears (right). All colours come from
+/// Draws the old (v1) pin: teal pin body, white inner circle, orange
+/// dog head (left) and teal cat head with ears (right). Only used as
+/// a fallback when the PNG assets are missing. All colours come from
 /// [AppColors], never hardcoded here.
 class _PinLogoPainter extends CustomPainter {
   @override

@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_toast.dart';
 
 class SocialLoginButtons extends StatelessWidget {
   const SocialLoginButtons({super.key, this.label});
@@ -72,9 +73,7 @@ class SocialLoginButtons extends StatelessWidget {
   }
 
   void _comingSoon(BuildContext context, String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    showAppToast(context, message);
   }
 }
 

@@ -53,6 +53,7 @@ import '../../../../core/routing/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_toast.dart';
 import '../../../../core/widgets/baytari_logo.dart';
 import '../../../onboarding/presentation/widgets/onboarding_illustration.dart';
 import '../../domain/entities/user_role.dart';
@@ -571,8 +572,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   // No photo yet: the licence is required for
                   // vet/shelter accounts — stay on this step.
                   if (_licenseBytes == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.licenseRequired)),
+                    showAppToast(
+                      context,
+                      l10n.licenseRequired,
+                      isError: true,
                     );
                     return;
                   }
@@ -667,9 +670,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       context.read<AuthCubit>().requestSignupOtp(
                         email: _emailController.text.trim(),
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(l10n.otpSent)),
-                      );
+                      showAppToast(context, l10n.otpSent);
                     },
               child: Text(l10n.resendCode),
             ),
@@ -700,9 +701,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               // can verify later from the email link — send them
               // to log in instead of leaving them stuck.
               context.go(AppRoutes.login);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.emailConfirmationSent)),
-              );
+              showAppToast(context, l10n.emailConfirmationSent);
             },
             child: Text(l10n.skip),
           ),
@@ -776,8 +775,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ? null
               : () async {
                   if (_usernameController.text.trim().isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.usernameRequired)),
+                    showAppToast(
+                      context,
+                      l10n.usernameRequired,
+                      isError: true,
                     );
                     return;
                   }
@@ -910,7 +911,7 @@ class _RoleStep extends StatelessWidget {
             Expanded(
               child: _RoleCard(
                 label: l10n.communityMember,
-                variant: OnboardingIllustration.community,
+                variant: OnboardingIllustration.impact,
                 onTap: () => onPick(_SignUpTrack.community),
               ),
             ),
@@ -930,7 +931,7 @@ class _RoleStep extends StatelessWidget {
             Expanded(
               child: _RoleCard(
                 label: l10n.shelter,
-                variant: OnboardingIllustration.strayAnimals,
+                variant: OnboardingIllustration.shelter,
                 onTap: () => onPick(_SignUpTrack.shelter),
               ),
             ),
@@ -942,7 +943,7 @@ class _RoleStep extends StatelessWidget {
   }
 }
 
-/// One role card: white rounded card, simplified illustration on
+/// One role card: white rounded card, Figma SVG illustration on
 /// top, label below (Figma layout).
 class _RoleCard extends StatelessWidget {
   const _RoleCard({
@@ -1071,9 +1072,9 @@ class _StepIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OnboardingIllustration variant = switch (track) {
-      _SignUpTrack.community => OnboardingIllustration.strayAnimals,
+      _SignUpTrack.community => OnboardingIllustration.impact,
       _SignUpTrack.vet => OnboardingIllustration.vetClinics,
-      _SignUpTrack.shelter => OnboardingIllustration.strayAnimals,
+      _SignUpTrack.shelter => OnboardingIllustration.shelter,
     };
     return SizedBox(
       height: 150,

@@ -36,6 +36,7 @@ import '../../../../core/routing/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_toast.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
 import '../widgets/auth_scaffold.dart';
@@ -191,9 +192,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
     final String email = _emailController.text.trim();
     if (!Validators.isValidEmail(email)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.invalidEmail)),
-      );
+      showAppToast(context, context.l10n.invalidEmail, isError: true);
       return;
     }
     context.read<AuthCubit>().requestPasswordReset(email: email);
@@ -234,9 +233,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       context.read<AuthCubit>().requestPasswordReset(
                         email: _email,
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(l10n.otpSent)),
-                      );
+                      showAppToast(context, l10n.otpSent);
                     },
               child: Text(l10n.resendCode),
             ),
@@ -307,8 +304,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       return;
     }
     if (_confirmController.text != _passwordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.passwordsDoNotMatch)),
+      showAppToast(
+        context,
+        context.l10n.passwordsDoNotMatch,
+        isError: true,
       );
       return;
     }

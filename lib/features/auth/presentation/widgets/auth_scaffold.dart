@@ -21,6 +21,7 @@ import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/localization/generated/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_toast.dart';
 
 /// The auth shell: back arrow, optional title, mint card, footer.
 class AuthScaffold extends StatelessWidget {
@@ -176,9 +177,7 @@ class _TermsFooter extends StatelessWidget {
   }
 
   void _comingSoon(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.l10n.socialComingSoon)),
-    );
+    showAppToast(context, context.l10n.socialComingSoon);
   }
 }
 

@@ -1,9 +1,10 @@
 /// Splash screen — the app entry point.
 ///
 /// Layout (from the Figma Splash / loading screens): off-white
-/// background, the Baytari logo centred, and a small orange loading
-/// dot underneath (like the dot on the Figma loading screen with
-/// the yellow cat).
+/// background, the Baytari logo centred, the yellow cat from the
+/// Figma loading screen (`loading_cat.svg`, the cat playing with
+/// a ball of yarn) underneath it, and a small orange loading dot
+/// below that.
 ///
 /// Flow: the screen shows for about 2 seconds, then decides where
 /// to go — it never stays on screen:
@@ -22,6 +23,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_router.dart';
@@ -75,7 +77,19 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const BaytariLogo(height: 220),
-            const SizedBox(height: 32),
+            const SizedBox(height: 16),
+            // The yellow cat from the Figma loading screen
+            // (`loading_cat.svg`): the loading screen in Figma is
+            // the cat with the orange dot underneath, so the
+            // splash shows both. Flexible so small screens shrink
+            // the art instead of overflowing.
+            Flexible(
+              child: SvgPicture.asset(
+                'assets/images/loading_cat.svg',
+                fit: BoxFit.contain,
+              ),
+            ),
+            const SizedBox(height: 16),
             // Orange loading dot, as on the Figma loading screen.
             const SizedBox(
               width: 12,
