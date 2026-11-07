@@ -17,6 +17,8 @@
 /// the same user until they sign out.
 library;
 
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 import '../../../../core/constants/supabase_constants.dart';
@@ -44,6 +46,7 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
     required String fullName,
     required UserRole role,
     String? phone,
+    String? workplaceNote,
   }) async {
     try {
       // `data:` becomes the auth user's metadata (user_metadata).
@@ -57,6 +60,7 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
           'full_name': fullName,
           'role': role.value,
           'phone': phone,
+          'workplace_note': workplaceNote,
         },
       );
       final supabase.User? user = response.user;
@@ -138,6 +142,10 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
   Future<ProfileModel> updateProfile({
     required String fullName,
     String? phone,
+    String? username,
+    String? avatarUrl,
+    String? licenseUrl,
+    String? workplaceNote,
   }) async {
     final supabase.User? user = _client.auth.currentUser;
     if (user == null) {
@@ -148,9 +156,20 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
       // user's row only, and return the updated row in one round
       // trip so the Cubit can show the new values immediately.
       // RLS also enforces "own row only" on the server side.
+      // Null fields are dropped: an update of the name must never
+      // wipe the username / avatar / licence that are already set.
+      final Map<String, dynamic> changes =
+          <String, dynamic>{
+            'full_name': fullName,
+            'phone': phone,
+            'username': username,
+            'avatar_url': avatarUrl,
+            'license_url': licenseUrl,
+            'workplace_note': workplaceNote,
+          }..removeWhere((_, value) => value == null);
       final Map<String, dynamic> row = await _client
           .from(SupabaseConstants.profilesTable)
-          .update(<String, dynamic>{'full_name': fullName, 'phone': phone})
+          .update(changes)
           .eq('id', user.id)
           .select()
           .single();
@@ -158,6 +177,154 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
     } on supabase.AuthException catch (e) {
       throw AuthException(e.message);
     } on supabase.PostgrestException catch (e) {
+      throw ServerException(e.message);
+    }
+  }
+
+  @override
+  Future<void> requestSignupOtp({required String email}) async {
+    try {
+      // `shouldCreateUser: false` — the account already exists
+      // (created by signUp); this must only send the code, never
+      // create a second account. Supabase sends a 6-digit code to
+      // the email when the project's email template uses the
+      // `{{ .Token }}` variable (see the Arabic doc for the exact
+      // Auth setting to check).
+      await _client.auth.signInWithOtp(
+        email: email,
+        shouldCreateUser: false,
+      );
+    } on supabase.AuthException catch (e) {
+      throw AuthException(e.message);
+    }
+  }
+
+  @override
+  Future<ProfileModel> verifySignupOtp({
+    required String email,
+    required String token,
+  }) async {
+    try {
+      final supabase.AuthResponse response = await _client.auth.verifyOTP(
+        email: email,
+        token: token,
+        type: supabase.OtpType.signup,
+      );
+      final supabase.User? user = response.user;
+      if (user == null) {
+        throw const AuthException('OTP verification did not return a user.');
+      }
+      // Now signed in: the profile row is created from the sign-up
+      // metadata, exactly like the first sign-in after a link.
+      return await _ensureProfile(user);
+    } on supabase.AuthException catch (e) {
+      throw AuthException(e.message);
+    } on supabase.PostgrestException catch (e) {
+      throw ServerException(e.message);
+    }
+  }
+
+  @override
+  Future<void> requestPasswordReset({required String email}) async {
+    try {
+      // Same OTP mechanism as sign-up, but the code is a recovery
+      // code. `shouldCreateUser: false` again: an unknown email
+      // must fail instead of silently creating an account.
+      await _client.auth.signInWithOtp(
+        email: email,
+        shouldCreateUser: false,
+      );
+    } on supabase.AuthException catch (e) {
+      throw AuthException(e.message);
+    }
+  }
+
+  @override
+  Future<void> verifyRecoveryOtp({
+    required String email,
+    required String token,
+  }) async {
+    try {
+      // `OtpType.recovery`: Supabase issues a recovery session
+      // (AuthChangeEvent.passwordRecovery). That session is what
+      // authorizes `updateUser` in resetPassword below.
+      await _client.auth.verifyOTP(
+        email: email,
+        token: token,
+        type: supabase.OtpType.recovery,
+      );
+    } on supabase.AuthException catch (e) {
+      throw AuthException(e.message);
+    }
+  }
+
+  @override
+  Future<void> resetPassword({required String newPassword}) async {
+    try {
+      await _client.auth.updateUser(
+        supabase.UserAttributes(password: newPassword),
+      );
+      // The password is changed: sign out, so the user signs in
+      // again with the new password (Figma success screen flow).
+      await _client.auth.signOut();
+    } on supabase.AuthException catch (e) {
+      throw AuthException(e.message);
+    }
+  }
+
+  @override
+  Future<String> uploadAvatar(List<int> bytes) async {
+    final supabase.User? user = _client.auth.currentUser;
+    if (user == null) {
+      throw const AuthException('No signed-in user.');
+    }
+    return _uploadFile(
+      bucket: 'avatars',
+      path: '${user.id}/avatar.jpg',
+      bytes: bytes,
+      publicUrl: true,
+    );
+  }
+
+  @override
+  Future<String> uploadLicense(List<int> bytes) async {
+    final supabase.User? user = _client.auth.currentUser;
+    if (user == null) {
+      throw const AuthException('No signed-in user.');
+    }
+    // Private bucket: return the storage path, not a public URL
+    // (a public URL would not open without a signed URL).
+    return _uploadFile(
+      bucket: 'licenses',
+      path:
+          '${user.id}/license_${DateTime.now().millisecondsSinceEpoch}.jpg',
+      bytes: bytes,
+      publicUrl: false,
+    );
+  }
+
+  /// Uploads [bytes] to [bucket]/[path] (overwriting a previous
+  /// file at the same path) and returns the public URL for a public
+  /// bucket, or the storage path for a private one.
+  Future<String> _uploadFile({
+    required String bucket,
+    required String path,
+    required List<int> bytes,
+    required bool publicUrl,
+  }) async {
+    try {
+      await _client.storage
+          .from(bucket)
+          .uploadBinary(
+            path,
+            Uint8List.fromList(bytes),
+            fileOptions: const supabase.FileOptions(upsert: true),
+          );
+      if (publicUrl) {
+        return _client.storage.from(bucket).getPublicUrl(path);
+      }
+      return path;
+    } on supabase.StorageException catch (e) {
       throw ServerException(e.message);
     }
   }

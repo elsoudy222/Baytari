@@ -10,10 +10,16 @@ library;
 
 import 'package:baytari/core/errors/failures.dart';
 import 'package:baytari/features/auth/domain/usecases/get_current_profile_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/request_otp_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/reset_password_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/update_profile_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/update_username_and_avatar_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/upload_avatar_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/upload_license_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:baytari/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:baytari/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,6 +33,12 @@ AuthCubit buildCubit(FakeAuthRepository repository) {
     signOutUseCase: SignOutUseCase(repository),
     getCurrentProfileUseCase: GetCurrentProfileUseCase(repository),
     updateProfileUseCase: UpdateProfileUseCase(repository),
+    requestOtpUseCase: RequestOtpUseCase(repository),
+    verifyOtpUseCase: VerifyOtpUseCase(repository),
+    resetPasswordUseCase: ResetPasswordUseCase(repository),
+    updateUsernameAndAvatarUseCase: UpdateUsernameAndAvatarUseCase(repository),
+    uploadLicenseUseCase: UploadLicenseUseCase(repository),
+    uploadAvatarUseCase: UploadAvatarUseCase(repository),
   );
 }
 

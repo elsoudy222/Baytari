@@ -59,4 +59,9 @@ abstract final class AppColors {
   static const Color darkSeed = primaryLight;
 
   static const Color error = Color(0xFFB3261E);
+
+  /// Facebook brand blue, used only by the (UI-only) Facebook
+  /// social button. Brand colors live in the theme so no widget
+  /// hardcodes a hex value.
+  static const Color facebookBlue = Color(0xFF1877F2);
 }

@@ -24,10 +24,16 @@ import '../../../../core/errors/result.dart';
 import '../../domain/entities/profile.dart';
 import '../../domain/entities/user_role.dart';
 import '../../domain/usecases/get_current_profile_usecase.dart';
+import '../../domain/usecases/request_otp_usecase.dart';
+import '../../domain/usecases/reset_password_usecase.dart';
 import '../../domain/usecases/sign_in_usecase.dart';
 import '../../domain/usecases/sign_out_usecase.dart';
 import '../../domain/usecases/sign_up_usecase.dart';
 import '../../domain/usecases/update_profile_usecase.dart';
+import '../../domain/usecases/update_username_and_avatar_usecase.dart';
+import '../../domain/usecases/upload_avatar_usecase.dart';
+import '../../domain/usecases/upload_license_usecase.dart';
+import '../../domain/usecases/verify_otp_usecase.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -37,6 +43,12 @@ class AuthCubit extends Cubit<AuthState> {
     required this._signOutUseCase,
     required this._getCurrentProfileUseCase,
     required this._updateProfileUseCase,
+    required this._requestOtpUseCase,
+    required this._verifyOtpUseCase,
+    required this._resetPasswordUseCase,
+    required this._updateUsernameAndAvatarUseCase,
+    required this._uploadLicenseUseCase,
+    required this._uploadAvatarUseCase,
   }) : super(const AuthState());
 
   final SignUpUseCase _signUpUseCase;
@@ -44,6 +56,20 @@ class AuthCubit extends Cubit<AuthState> {
   final SignOutUseCase _signOutUseCase;
   final GetCurrentProfileUseCase _getCurrentProfileUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
+  final RequestOtpUseCase _requestOtpUseCase;
+  final VerifyOtpUseCase _verifyOtpUseCase;
+  final ResetPasswordUseCase _resetPasswordUseCase;
+  final UpdateUsernameAndAvatarUseCase _updateUsernameAndAvatarUseCase;
+  final UploadLicenseUseCase _uploadLicenseUseCase;
+  final UploadAvatarUseCase _uploadAvatarUseCase;
+
+  /// Clears a one-shot [AuthAction] after the screen handled it,
+  /// so the same action is never delivered twice.
+  void clearAction() {
+    if (state.action != AuthAction.none) {
+      emit(state.copyWith(action: AuthAction.none));
+    }
+  }
 
   /// Restores the session at startup. Called once by `BaytariApp`.
   /// Supabase persists the session on the device, so a returning
@@ -92,14 +118,22 @@ class AuthCubit extends Cubit<AuthState> {
     required String fullName,
     required UserRole role,
     String? phone,
+    String? workplaceNote,
   }) async {
-    emit(state.copyWith(status: AuthStatus.loading, clearError: true));
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
     final Result<Profile?> result = await _signUpUseCase(
       email: email,
       password: password,
       fullName: fullName,
       role: role,
       phone: phone,
+      workplaceNote: workplaceNote,
     );
     switch (result) {
       case Success(:final value):
@@ -191,11 +225,19 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> updateProfile({
     required String fullName,
     String? phone,
+    String? username,
+    String? avatarUrl,
+    String? licenseUrl,
+    String? workplaceNote,
   }) async {
     emit(state.copyWith(status: AuthStatus.loading, clearError: true));
     final Result<Profile> result = await _updateProfileUseCase(
       fullName: fullName,
       phone: phone,
+      username: username,
+      avatarUrl: avatarUrl,
+      licenseUrl: licenseUrl,
+      workplaceNote: workplaceNote,
     );
     switch (result) {
       case Success(:final value):
@@ -213,6 +255,269 @@ class AuthCubit extends Cubit<AuthState> {
             errorMessage: failure.message,
           ),
         );
+    }
+  }
+
+  /// Sends the sign-up OTP code to [email]. Emits `otpSent` on
+  /// success so the wizard advances to the code boxes; on failure
+  /// the wizard stays and shows the error.
+  Future<void> requestSignupOtp({required String email}) async {
+    await _requestOtp(email: email, purpose: OtpPurpose.signup);
+  }
+
+  /// Sends the password-recovery OTP code to [email].
+  Future<void> requestPasswordReset({required String email}) async {
+    await _requestOtp(email: email, purpose: OtpPurpose.recovery);
+  }
+
+  /// Shared OTP-request logic for both purposes: loading, one use
+  /// case call, then `otpSent` or the error.
+  Future<void> _requestOtp({
+    required String email,
+    required OtpPurpose purpose,
+  }) async {
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
+    final Result<void> result = await _requestOtpUseCase(
+      email: email,
+      purpose: purpose,
+    );
+    switch (result) {
+      case Success():
+        emit(
+          state.copyWith(
+            status: AuthStatus.unauthenticated,
+            action: AuthAction.otpSent,
+            clearError: true,
+          ),
+        );
+      case FailureResult(:final failure):
+        emit(
+          state.copyWith(
+            status: AuthStatus.unauthenticated,
+            errorMessage: failure.message,
+          ),
+        );
+    }
+  }
+
+  /// Verifies the sign-up OTP. On success the user is signed in
+  /// (profile in state) and the wizard advances to the
+  /// username/photo step. A wrong code emits `unauthenticated`
+  /// with the error — the wizard shows the red "Wrong Code" state.
+  Future<void> verifySignupOtp({
+    required String email,
+    required String token,
+  }) async {
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
+    final Result<Profile?> result = await _verifyOtpUseCase(
+      email: email,
+      token: token,
+      purpose: OtpPurpose.signup,
+    );
+    switch (result) {
+      case Success(:final value):
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            profile: value,
+            action: AuthAction.otpVerified,
+            clearError: true,
+          ),
+        );
+      case FailureResult(:final failure):
+        emit(
+          state.copyWith(
+            status: AuthStatus.unauthenticated,
+            errorMessage: failure.message,
+          ),
+        );
+    }
+  }
+
+  /// Verifies the recovery OTP. On success the user holds a
+  /// recovery session and the forgot-password flow advances to
+  /// the new-password step.
+  Future<void> verifyRecoveryOtp({
+    required String email,
+    required String token,
+  }) async {
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
+    final Result<Profile?> result = await _verifyOtpUseCase(
+      email: email,
+      token: token,
+      purpose: OtpPurpose.recovery,
+    );
+    switch (result) {
+      case Success():
+        emit(
+          state.copyWith(
+            status: AuthStatus.unauthenticated,
+            action: AuthAction.otpVerified,
+            clearError: true,
+          ),
+        );
+      case FailureResult(:final failure):
+        emit(
+          state.copyWith(
+            status: AuthStatus.unauthenticated,
+            errorMessage: failure.message,
+          ),
+        );
+    }
+  }
+
+  /// Sets the new password (recovery session required) and signs
+  /// out. Emits `passwordReset` so the flow shows the success
+  /// screen, which sends the user to log in.
+  Future<void> resetPassword({required String newPassword}) async {
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
+    final Result<void> result = await _resetPasswordUseCase(
+      newPassword: newPassword,
+    );
+    switch (result) {
+      case Success():
+        emit(
+          state.copyWith(
+            status: AuthStatus.unauthenticated,
+            clearProfile: true,
+            action: AuthAction.passwordReset,
+            clearError: true,
+          ),
+        );
+      case FailureResult(:final failure):
+        emit(
+          state.copyWith(
+            status: AuthStatus.unauthenticated,
+            errorMessage: failure.message,
+          ),
+        );
+    }
+  }
+
+  /// Saves the username and avatar URL picked on the sign-up
+  /// "Welcome To Baytari!" step. Emits `profileCompleted` so the
+  /// wizard advances to the confirmation screen.
+  Future<void> completeProfile({
+    String? username,
+    String? avatarUrl,
+  }) async {
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
+    final Result<Profile> result = await _updateUsernameAndAvatarUseCase(
+      username: username,
+      avatarUrl: avatarUrl,
+    );
+    switch (result) {
+      case Success(:final value):
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            profile: value,
+            action: AuthAction.profileCompleted,
+            clearError: true,
+          ),
+        );
+      case FailureResult(:final failure):
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            errorMessage: failure.message,
+          ),
+        );
+    }
+  }
+
+  /// Uploads a licence photo and returns its storage path (or
+  /// null on failure, with the error in state). The wizard then
+  /// saves the path on the profile via [updateProfile].
+  Future<String?> uploadLicense(List<int> bytes) async {
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
+    final Result<String> result = await _uploadLicenseUseCase(bytes);
+    switch (result) {
+      case Success(:final value):
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            action: AuthAction.licenseUploaded,
+            clearError: true,
+          ),
+        );
+        return value;
+      case FailureResult(:final failure):
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            errorMessage: failure.message,
+          ),
+        );
+        return null;
+    }
+  }
+
+  /// Uploads an avatar photo and returns its public URL (or null
+  /// on failure, with the error in state). The wizard then saves
+  /// the URL on the profile via [completeProfile].
+  Future<String?> uploadAvatar(List<int> bytes) async {
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        clearError: true,
+        action: AuthAction.none,
+      ),
+    );
+    final Result<String> result = await _uploadAvatarUseCase(bytes);
+    switch (result) {
+      case Success(:final value):
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            clearError: true,
+          ),
+        );
+        return value;
+      case FailureResult(:final failure):
+        emit(
+          state.copyWith(
+            status: AuthStatus.authenticated,
+            errorMessage: failure.message,
+          ),
+        );
+        return null;
     }
   }
 }

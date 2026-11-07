@@ -24,11 +24,26 @@ enum AuthStatus {
   awaitingConfirmation,
 }
 
+/// A one-shot result of the last auth action, so a screen can
+/// react exactly once (e.g. the sign-up wizard advances to the
+/// next step when `otpVerified` arrives, the forgot-password flow
+/// advances when `otpSent` arrives). It is reset to `none` on
+/// every new action and on every success that sets a status.
+enum AuthAction {
+  none,
+  otpSent,
+  otpVerified,
+  passwordReset,
+  profileCompleted,
+  licenseUploaded,
+}
+
 class AuthState extends Equatable {
   const AuthState({
     this.status = AuthStatus.initial,
     this.profile,
     this.errorMessage,
+    this.action = AuthAction.none,
   });
 
   final AuthStatus status;
@@ -40,6 +55,9 @@ class AuthState extends Equatable {
   /// Cleared on every new action and on every success.
   final String? errorMessage;
 
+  /// The last completed action (see [AuthAction]).
+  final AuthAction action;
+
   /// Convenience: true only when the user is signed in.
   bool get isAuthenticated => status == AuthStatus.authenticated;
 
@@ -47,6 +65,7 @@ class AuthState extends Equatable {
     AuthStatus? status,
     Profile? profile,
     String? errorMessage,
+    AuthAction? action,
     bool clearError = false,
     bool clearProfile = false,
   }) {
@@ -56,9 +75,15 @@ class AuthState extends Equatable {
       // the two boolean flags say explicitly when to clear a field.
       profile: clearProfile ? null : (profile ?? this.profile),
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
+      action: action ?? this.action,
     );
   }
 
   @override
-  List<Object?> get props => <Object?>[status, profile, errorMessage];
+  List<Object?> get props => <Object?>[
+    status,
+    profile,
+    errorMessage,
+    action,
+  ];
 }

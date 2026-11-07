@@ -30,6 +30,8 @@ dependencies:
   # font files are fetched from Google Fonts at runtime and cached;
   # no binary font files need to live in the repo.
   google_fonts: ^6.2.1
+  # Profile photo + licence photo (auth UI, Figma design).
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

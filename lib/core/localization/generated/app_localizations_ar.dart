@@ -195,4 +195,216 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get welcomeMessage =>
       'ابحث عن طبيب بيطري واحجز موعداً لحيوانك الأليف.';
+
+  @override
+  String get welcomeBack => 'أهلاً بعودتك!';
+
+  @override
+  String get emailOrPhone => 'البريد الإلكتروني أو رقم الهاتف';
+
+  @override
+  String get forgotPassword => 'نسيت كلمة المرور؟';
+
+  @override
+  String get orLogInWith => 'أو سجّل الدخول باستخدام';
+
+  @override
+  String get orSignUpWith => 'أو سجّل باستخدام';
+
+  @override
+  String get socialComingSoon => 'تسجيل الدخول بالسوشيال قريباً';
+
+  @override
+  String get termsAgreement => 'بالمتابعة، أنت توافق على';
+
+  @override
+  String get termsOfService => 'شروط الاستخدام';
+
+  @override
+  String get privacyPolicy => 'سياسة الخصوصية';
+
+  @override
+  String get communityMember => 'عضو في المجتمع';
+
+  @override
+  String get veterinarian => 'طبيب بيطري';
+
+  @override
+  String get shelter => 'ملجأ';
+
+  @override
+  String get accountInformation => 'معلومات الحساب';
+
+  @override
+  String get firstName => 'الاسم الأول';
+
+  @override
+  String get lastName => 'اسم العائلة';
+
+  @override
+  String get phoneNumber => 'رقم الهاتف';
+
+  @override
+  String get next => 'التالي';
+
+  @override
+  String get setYourPassword => 'عيّن كلمة المرور';
+
+  @override
+  String get createPassword => 'أنشئ كلمة المرور';
+
+  @override
+  String get passwordRuleLength => '8 أحرف على الأقل.';
+
+  @override
+  String get passwordRuleCase => 'حروف كبيرة وصغيرة';
+
+  @override
+  String get passwordRuleNumber => 'رقم واحد على الأقل';
+
+  @override
+  String get verifyYourEmail =>
+      'أرسلنا رمز تحقق إلى بريدك الإلكتروني. أدخل الرمز بالأسفل لتأكيد بريدك';
+
+  @override
+  String get didNotReceiveCode => 'لم يصلك الرمز؟';
+
+  @override
+  String get resendCode => 'إعادة إرسال الرمز';
+
+  @override
+  String get verify => 'تأكيد';
+
+  @override
+  String get verifyCode => 'تأكيد الرمز';
+
+  @override
+  String get wrongCode => 'رمز خاطئ. حاول مرة أخرى أو أعد تعيين الرمز.';
+
+  @override
+  String get clinicOwner => 'مالك العيادة';
+
+  @override
+  String get staffVet => 'طبيب موظف';
+
+  @override
+  String get pickClinic => 'اختر العيادة التي تعمل بها';
+
+  @override
+  String get shelterOwner => 'مالك الملجأ';
+
+  @override
+  String get shelterWorker => 'عامل في ملجأ';
+
+  @override
+  String get pickShelter => 'اختر الملجأ الذي تعمل به';
+
+  @override
+  String get workplaceComingSoon =>
+      'سيتم إضافة العيادات والملاجئ قريباً — اختيارك محفوظ كملاحظة مؤقتاً.';
+
+  @override
+  String get verifyYourLicense => 'تحقق من رخصتك';
+
+  @override
+  String get takeLicensePhoto => 'اضغط لالتقاط صورة لرخصتك';
+
+  @override
+  String get uploadPhoto => 'رفع الصورة';
+
+  @override
+  String get retake => 'إعادة التصوير';
+
+  @override
+  String get choosePhotoSource => 'اختر طريقة إضافة الصورة';
+
+  @override
+  String get camera => 'الكاميرا';
+
+  @override
+  String get gallery => 'المعرض';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get welcomeToBaytari => 'أهلاً بك في بيطري!';
+
+  @override
+  String get pickUsernameMessage =>
+      'خلّي بروفايلك مميز! اختر اسم مستخدم يمثلك في مجتمعنا. ده هيكون هويتك وأنت بتستكشف وتتواصل مع الآخرين في بيطري.';
+
+  @override
+  String get addProfilePhoto => 'أضف صورة البروفايل';
+
+  @override
+  String get username => 'اسم المستخدم';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get usernameRequired => 'من فضلك اختر اسم مستخدم';
+
+  @override
+  String get usernameTaken => 'اسم المستخدم ده مستخدم بالفعل، اختر واحداً آخر';
+
+  @override
+  String get accountReady => 'أهلاً! حسابك جاهز';
+
+  @override
+  String get accountReadyCommunity =>
+      'تقدر دلوقتي تستكشف التطبيق وتتواصل مع مجتمعك المحلي!';
+
+  @override
+  String get accountReadyVet =>
+      'تقدر دلوقتي تدير عيادتك وتستقبل المواعيد وتتواصل مع المجتمع.';
+
+  @override
+  String get goToHome => 'الذهاب للرئيسية';
+
+  @override
+  String get resetYourPassword => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get resetPasswordMessage =>
+      'أدخل بريدك الإلكتروني بالأسفل لاستلام كلمة مرور لمرة واحدة (OTP) لإعادة تعيين كلمة المرور';
+
+  @override
+  String get sendOtp => 'إرسال الرمز';
+
+  @override
+  String get enterVerificationCode => 'أدخل رمز التحقق';
+
+  @override
+  String get enterVerificationCodeMessage =>
+      'أرسلنا رمز تحقق إلى بريدك. أدخل الرمز بالأسفل لإعادة تعيين كلمة المرور';
+
+  @override
+  String get createNewPassword => 'إنشاء كلمة مرور جديدة';
+
+  @override
+  String get confirmNewPassword => 'تأكيد كلمة المرور الجديدة';
+
+  @override
+  String get passwordResetSuccess => 'تمت إعادة تعيين كلمة المرور بنجاح!';
+
+  @override
+  String get passwordResetSuccessMessage =>
+      'تمت إعادة تعيين كلمة المرور بنجاح. تقدر دلوقتي تسجل الدخول بكلمة المرور الجديدة';
+
+  @override
+  String get selectCountry => 'اختر الدولة';
+
+  @override
+  String get otpSent => 'تم إرسال رمز التحقق';
+
+  @override
+  String get licenseRequired => 'من فضلك ارفع صورة رخصتك للمتابعة';
+
+  @override
+  String get emailOnlyOtp => 'رموز التحقق تُرسل إلى بريدك الإلكتروني';
+
+  @override
+  String get termsAnd => 'و';
 }

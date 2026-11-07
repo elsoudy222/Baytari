@@ -42,6 +42,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/auth_state.dart';
+import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/profile_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
@@ -78,6 +79,11 @@ abstract final class AppRoutes {
   static const String splash = '/splash';
   static const String onboarding = '/onboarding';
   static const String getStarted = '/get-started';
+  static const String forgotPassword = '/forgot-password';
+  static const String forgotPasswordVerify = '/forgot-password/verify';
+  static const String forgotPasswordNewPassword =
+      '/forgot-password/new-password';
+  static const String forgotPasswordSuccess = '/forgot-password/success';
 }
 
 abstract final class AppRouter {
@@ -105,9 +111,18 @@ abstract final class AppRouter {
             location == AppRoutes.onboarding ||
             location == AppRoutes.getStarted ||
             location == AppRoutes.login ||
-            location == AppRoutes.register;
+            location == AppRoutes.register ||
+            location == AppRoutes.forgotPassword ||
+            location == AppRoutes.forgotPasswordVerify ||
+            location == AppRoutes.forgotPasswordNewPassword ||
+            location == AppRoutes.forgotPasswordSuccess;
         final bool onAuthRoute =
-            location == AppRoutes.login || location == AppRoutes.register;
+            location == AppRoutes.login ||
+            location == AppRoutes.register ||
+            location == AppRoutes.forgotPassword ||
+            location == AppRoutes.forgotPasswordVerify ||
+            location == AppRoutes.forgotPasswordNewPassword ||
+            location == AppRoutes.forgotPasswordSuccess;
         return switch (authCubit.state.status) {
           // Session check still running: do not redirect yet.
           AuthStatus.initial || AuthStatus.loading => null,
@@ -151,6 +166,32 @@ abstract final class AppRouter {
         GoRoute(
           path: AppRoutes.register,
           builder: (context, state) => const RegisterScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.forgotPassword,
+          builder: (context, state) => const ForgotPasswordScreen(
+            step: ForgotPasswordStep.request,
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.forgotPasswordVerify,
+          builder: (context, state) => ForgotPasswordScreen(
+            step: ForgotPasswordStep.verify,
+            email: state.extra as String?,
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.forgotPasswordNewPassword,
+          builder: (context, state) => ForgotPasswordScreen(
+            step: ForgotPasswordStep.newPassword,
+            email: state.extra as String?,
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.forgotPasswordSuccess,
+          builder: (context, state) => const ForgotPasswordScreen(
+            step: ForgotPasswordStep.success,
+          ),
         ),
         GoRoute(
           path: AppRoutes.profile,

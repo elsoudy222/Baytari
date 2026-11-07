@@ -12,10 +12,16 @@ import 'package:baytari/core/localization/generated/app_localizations.dart';
 import 'package:baytari/core/services/app_settings_service.dart';
 import 'package:baytari/core/services/supabase_service.dart';
 import 'package:baytari/features/auth/domain/usecases/get_current_profile_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/request_otp_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/reset_password_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:baytari/features/auth/domain/usecases/update_profile_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/update_username_and_avatar_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/upload_avatar_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/upload_license_usecase.dart';
+import 'package:baytari/features/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:baytari/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:baytari/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +47,14 @@ void main() {
       signOutUseCase: SignOutUseCase(repository),
       getCurrentProfileUseCase: GetCurrentProfileUseCase(repository),
       updateProfileUseCase: UpdateProfileUseCase(repository),
+      requestOtpUseCase: RequestOtpUseCase(repository),
+      verifyOtpUseCase: VerifyOtpUseCase(repository),
+      resetPasswordUseCase: ResetPasswordUseCase(repository),
+      updateUsernameAndAvatarUseCase: UpdateUsernameAndAvatarUseCase(
+        repository,
+      ),
+      uploadLicenseUseCase: UploadLicenseUseCase(repository),
+      uploadAvatarUseCase: UploadAvatarUseCase(repository),
     );
     appCubit = AppCubit(AppSettingsService(prefs), SupabaseService());
   });
@@ -77,9 +91,11 @@ void main() {
       (WidgetTester tester) async {
     await pumpLogin(tester);
 
-    expect(find.text('تسجيل الدخول'), findsWidgets);
-    expect(find.text('البريد الإلكتروني'), findsOneWidget);
+    // Figma header + fields (hint text, not labels).
+    expect(find.text('أهلاً بعودتك!'), findsOneWidget);
+    expect(find.text('البريد الإلكتروني أو رقم الهاتف'), findsOneWidget);
     expect(find.text('كلمة المرور'), findsOneWidget);
+    expect(find.text('نسيت كلمة المرور؟'), findsOneWidget);
     // Supabase is not configured in tests: the demo-mode note shows.
     expect(
       find.text(
@@ -111,7 +127,7 @@ void main() {
     await pumpLogin(tester);
 
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'البريد الإلكتروني'),
+      find.widgetWithText(TextFormField, 'البريد الإلكتروني أو رقم الهاتف'),
       'test@example.com',
     );
     await tester.enterText(
