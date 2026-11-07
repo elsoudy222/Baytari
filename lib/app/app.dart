@@ -1,12 +1,13 @@
-/// Root widget. Wires theme, locale, routing and the two Cubits
+/// Root widget. Wires theme, locale, routing and the three Cubits
 /// together. No feature logic lives here.
 ///
 /// How it works:
 /// - `BaytariApp` is a [StatefulWidget] (not stateless) because it
-///   OWNS two long-lived objects: the app-wide [AuthCubit] and the
-///   [GoRouter]. Both are created once in `initState` and disposed
-///   in `dispose` — creating the router in `build` would rebuild it
-///   (and reset navigation) on every theme/language change.
+///   OWNS three long-lived objects: the app-wide [AuthCubit], the
+///   [OnboardingCubit] and the [GoRouter]. All are created once in
+///   `initState` and disposed in `dispose` — creating the router in
+///   `build` would rebuild it (and reset navigation) on every
+///   theme/language change.
 /// - [AppCubit] (theme + locale) is provided with `BlocProvider`
 ///   `create`, as in M0; [AuthCubit] is provided with
 ///   `BlocProvider.value` because the state object already owns the
@@ -29,6 +30,7 @@ import '../core/routing/app_router.dart';
 import '../core/services/supabase_service.dart';
 import '../core/theme/app_theme.dart';
 import '../features/auth/presentation/cubit/auth_cubit.dart';
+import '../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../injection_container.dart';
 import 'app_cubit.dart';
 import 'app_state.dart';
@@ -45,16 +47,22 @@ class _BaytariAppState extends State<BaytariApp> {
   /// a fresh Cubit per request) and closed here in [dispose].
   late final AuthCubit _authCubit;
 
-  /// The router, built once for [_authCubit] so its redirect can
-  /// read the auth state and re-run on every auth state change.
+  /// The single app-wide onboarding Cubit (seen flag + guest mode).
+  /// Created from GetIt and closed here, like [_authCubit].
+  late final OnboardingCubit _onboardingCubit;
+
+  /// The router, built once for [_authCubit] and [_onboardingCubit]
+  /// so its redirect can read both states and re-run on changes.
   late final GoRouter _router;
 
   @override
   void initState() {
     super.initState();
     _authCubit = sl<AuthCubit>()..checkSession();
+    _onboardingCubit = sl<OnboardingCubit>();
     _router = AppRouter.create(
       authCubit: _authCubit,
+      onboardingCubit: _onboardingCubit,
       supabaseConfigured: sl<SupabaseService>().isConfigured,
     );
   }
@@ -63,6 +71,7 @@ class _BaytariAppState extends State<BaytariApp> {
   void dispose() {
     _router.dispose();
     _authCubit.close();
+    _onboardingCubit.close();
     super.dispose();
   }
 
@@ -70,10 +79,12 @@ class _BaytariAppState extends State<BaytariApp> {
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>.value(
       value: _authCubit,
-      child: BlocProvider<AppCubit>(
-        create: (_) => sl<AppCubit>()..load(),
-        child: BlocBuilder<AppCubit, AppState>(
-          builder: (context, state) {
+      child: BlocProvider<OnboardingCubit>.value(
+        value: _onboardingCubit,
+        child: BlocProvider<AppCubit>(
+          create: (_) => sl<AppCubit>()..load(),
+          child: BlocBuilder<AppCubit, AppState>(
+            builder: (context, state) {
             return MaterialApp.router(
               debugShowCheckedModeBanner: false,
               routerConfig: _router,
@@ -93,6 +104,7 @@ class _BaytariAppState extends State<BaytariApp> {
                   AppConstants.appName,
             );
           },
+        ),
         ),
       ),
     );

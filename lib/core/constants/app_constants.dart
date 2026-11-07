@@ -25,4 +25,8 @@ abstract final class AppConstants {
   // separate from any other app/package that shares the same storage.
   static const String themeModeKey = 'baytari_theme_mode';
   static const String localeCodeKey = 'baytari_locale_code';
+
+  /// True once the user has finished (or skipped) onboarding.
+  /// Read by [OnboardingCubit] so returning users skip onboarding.
+  static const String onboardingSeenKey = 'baytari_onboarding_seen';
 }

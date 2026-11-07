@@ -5,18 +5,55 @@ import 'package:flutter/material.dart';
 /// Widgets must use `Theme.of(context).colorScheme` (or these constants
 /// via [AppTheme]) — never a hardcoded `Color(...)` in a widget.
 ///
-/// The palette is deliberately small in M0: one teal seed colour
-/// generates the whole light and dark `ColorScheme` (see
-/// `light_theme.dart` / `dark_theme.dart`), so light and dark stay
-/// consistent by construction. `secondary` is defined for M1+ use
-/// (accents, highlights) and is not used by any M0 screen yet.
+/// The palette is the Figma palette, sampled from the screenshots the
+/// user sent (Splash / Onboarding / Get Started / Log In):
+/// - background `#FAFAFA` (off-white, sampled from every screen)
+/// - primary teal `#3E8E83` (the full-width buttons, sampled)
+/// - orange accent `#F15B2A` (the pin dog in the Splash logo, and the
+///   active onboarding dot)
+/// - dark teal heading `#223F3C` (onboarding titles, sampled)
+/// - peach blob `#F2DEC5` (the blob behind the onboarding art, sampled)
+/// - mint card `#EAF6F2` (the pale card behind the Sign Up form)
+/// - subtitle grey `#5E6E6B` (onboarding subtitles, sampled)
+/// - inactive dot `#D9DEDD` (grey onboarding dots)
+///
+/// The dark theme keeps the same teal/orange identity on a dark teal
+/// background, so the brand survives a theme switch.
 abstract final class AppColors {
-  /// Primary brand color: a calm teal, fitting a veterinary app.
-  static const Color primary = Color(0xFF0F766E);
-  static const Color primaryLight = Color(0xFF14B8A6);
-  static const Color primaryDark = Color(0xFF0B4F4A);
+  /// Primary brand color: the Figma teal, sampled from the buttons.
+  static const Color primary = Color(0xFF3E8E83);
+  static const Color primaryLight = Color(0xFF6FB3A8);
+  static const Color primaryDark = Color(0xFF2A6B62);
 
-  static const Color secondary = Color(0xFFF59E0B);
+  /// Orange accent: the Figma orange, sampled from the logo pin.
+  static const Color secondary = Color(0xFFF15B2A);
+
+  /// Dark teal used for onboarding titles and the logo wordmark.
+  static const Color heading = Color(0xFF223F3C);
+
+  /// Grey-teal used for onboarding subtitles and secondary text.
+  static const Color subtitle = Color(0xFF5E6E6B);
+
+  /// Peach blob behind the onboarding illustrations.
+  static const Color peach = Color(0xFFF2DEC5);
+
+  /// Pale mint card background (Sign Up / welcome cards in Figma).
+  static const Color mint = Color(0xFFEAF6F2);
+
+  /// Pale mint border / divider in the Figma cards.
+  static const Color mintBorder = Color(0xFFCFE1DF);
+
+  /// Off-white Figma background.
+  static const Color background = Color(0xFFFAFAFA);
+
+  /// Grey inactive onboarding dot.
+  static const Color dotInactive = Color(0xFFD9DEDD);
+
+  /// Dark theme surfaces: a very dark teal, not pure black, so the
+  /// teal buttons still read as brand teal.
+  static const Color darkBackground = Color(0xFF12211F);
+  static const Color darkSurface = Color(0xFF1B2E2B);
+  static const Color darkHeading = Color(0xFFEAF6F2);
 
   static const Color lightSeed = primary;
   static const Color darkSeed = primaryLight;

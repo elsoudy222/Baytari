@@ -51,6 +51,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get fullName => 'الاسم الكامل';
 
   @override
+  String get getStarted => 'ابدأ';
+
+  @override
+  String get getStartedMessage =>
+      'انضم إلى بيطري اليوم لتساعد الحيوانات الضالة وتتواصل مع الخدمات القريبة منك';
+
+  @override
   String get home => 'الرئيسية';
 
   @override
@@ -64,10 +71,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get invalidPhone => 'أدخل رقم هاتف صحيحاً';
 
   @override
+  String get joinAsGuest => 'المتابعة كضيف';
+
+  @override
   String get language => 'اللغة';
 
   @override
   String get loading => 'جارٍ التحميل…';
+
+  @override
+  String get logIn => 'تسجيل الدخول';
 
   @override
   String get login => 'تسجيل الدخول';
@@ -83,6 +96,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get onboardingSubtitle1 =>
+      'انضم إلينا في تقديم الرعاية وإيجاد بيوت للحيوانات الضالة في مجتمعك';
+
+  @override
+  String get onboardingSubtitle2 =>
+      'اعثر بسهولة على عيادات بيطرية وملاجئ حيوانات قريبة منك واحجز موعداً معها.';
+
+  @override
+  String get onboardingSubtitle3 =>
+      'تواصل مع مجتمع شغوف مكرّس لرعاية الحيوانات الضالة.';
+
+  @override
+  String get onboardingSubtitle4 =>
+      'انضم إلينا اليوم واصنع فرقاً في حياة الحيوانات الضالة.';
+
+  @override
+  String get onboardingTitle1 => 'مساعدة الحيوانات الضالة';
+
+  @override
+  String get onboardingTitle2 => 'عيادات بيطرية';
+
+  @override
+  String get onboardingTitle3 => 'مجتمع المساعدين';
+
+  @override
+  String get onboardingTitle4 => 'اصنع أثراً';
 
   @override
   String get password => 'كلمة المرور';
@@ -122,6 +163,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settings => 'الإعدادات';
+
+  @override
+  String get signUp => 'إنشاء حساب';
+
+  @override
+  String get skip => 'تخطي';
 
   @override
   String get supabaseConfigured => 'تم إعداد Supabase.';

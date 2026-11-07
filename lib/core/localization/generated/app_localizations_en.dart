@@ -51,6 +51,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fullName => 'Full name';
 
   @override
+  String get getStarted => 'Get Started';
+
+  @override
+  String get getStartedMessage =>
+      'Join Baytari today to help stray animals and connect with local services near you';
+
+  @override
   String get home => 'Home';
 
   @override
@@ -64,10 +71,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invalidPhone => 'Enter a valid phone number';
 
   @override
+  String get joinAsGuest => 'Join as a guest';
+
+  @override
   String get language => 'Language';
 
   @override
   String get loading => 'Loading…';
+
+  @override
+  String get logIn => 'Log In';
 
   @override
   String get login => 'Sign in';
@@ -83,6 +96,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noAccount => 'Don\'t have an account?';
+
+  @override
+  String get onboardingSubtitle1 =>
+      'Join us in providing care and finding homes for stray animals in your community';
+
+  @override
+  String get onboardingSubtitle2 =>
+      'Easily locate and book appointments with nearby vet clinics and animal shelters.';
+
+  @override
+  String get onboardingSubtitle3 =>
+      'Connect with a passionate community dedicated to the welfare of stray animals.';
+
+  @override
+  String get onboardingSubtitle4 =>
+      'Join us today and make a difference in the lives of stray animals.';
+
+  @override
+  String get onboardingTitle1 => 'Helping Stray Animals';
+
+  @override
+  String get onboardingTitle2 => 'Vet Clinics';
+
+  @override
+  String get onboardingTitle3 => 'Community of Helpers';
+
+  @override
+  String get onboardingTitle4 => 'Make an Impact';
 
   @override
   String get password => 'Password';
@@ -122,6 +163,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get skip => 'Skip';
 
   @override
   String get supabaseConfigured => 'Supabase is configured.';

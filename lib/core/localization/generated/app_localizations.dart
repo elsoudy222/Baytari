@@ -176,6 +176,18 @@ abstract class AppLocalizations {
   /// **'Full name'**
   String get fullName;
 
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
+
+  /// No description provided for @getStartedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Baytari today to help stray animals and connect with local services near you'**
+  String get getStartedMessage;
+
   /// No description provided for @home.
   ///
   /// In en, this message translates to:
@@ -200,6 +212,12 @@ abstract class AppLocalizations {
   /// **'Enter a valid phone number'**
   String get invalidPhone;
 
+  /// No description provided for @joinAsGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Join as a guest'**
+  String get joinAsGuest;
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:
@@ -211,6 +229,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading…'**
   String get loading;
+
+  /// No description provided for @logIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get logIn;
 
   /// No description provided for @login.
   ///
@@ -241,6 +265,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t have an account?'**
   String get noAccount;
+
+  /// No description provided for @onboardingSubtitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Join us in providing care and finding homes for stray animals in your community'**
+  String get onboardingSubtitle1;
+
+  /// No description provided for @onboardingSubtitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Easily locate and book appointments with nearby vet clinics and animal shelters.'**
+  String get onboardingSubtitle2;
+
+  /// No description provided for @onboardingSubtitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect with a passionate community dedicated to the welfare of stray animals.'**
+  String get onboardingSubtitle3;
+
+  /// No description provided for @onboardingSubtitle4.
+  ///
+  /// In en, this message translates to:
+  /// **'Join us today and make a difference in the lives of stray animals.'**
+  String get onboardingSubtitle4;
+
+  /// No description provided for @onboardingTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Helping Stray Animals'**
+  String get onboardingTitle1;
+
+  /// No description provided for @onboardingTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Vet Clinics'**
+  String get onboardingTitle2;
+
+  /// No description provided for @onboardingTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Community of Helpers'**
+  String get onboardingTitle3;
+
+  /// No description provided for @onboardingTitle4.
+  ///
+  /// In en, this message translates to:
+  /// **'Make an Impact'**
+  String get onboardingTitle4;
 
   /// No description provided for @password.
   ///
@@ -319,6 +391,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
 
   /// No description provided for @supabaseConfigured.
   ///
