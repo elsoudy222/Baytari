@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -11,6 +12,8 @@ import 'app_colors.dart';
 /// mirrored is deliberate: any override added to one theme must be
 /// added to the other, or a widget will look different in dark mode
 /// for no reason.
+///
+/// Font: Cairo, same as the light theme (see `light_theme.dart`).
 ThemeData buildDarkTheme() {
   final ColorScheme colorScheme = ColorScheme.fromSeed(
     seedColor: AppColors.darkSeed,
@@ -20,6 +23,7 @@ ThemeData buildDarkTheme() {
     useMaterial3: true,
     colorScheme: colorScheme,
     brightness: Brightness.dark,
+    textTheme: GoogleFonts.cairoTextTheme(ThemeData.dark().textTheme),
     scaffoldBackgroundColor: AppColors.darkBackground,
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.darkBackground,
