@@ -49,4 +49,14 @@ class AppSettingsService {
   Future<bool> setLocale(Locale locale) {
     return _prefs.setString(AppConstants.localeCodeKey, locale.languageCode);
   }
+
+  /// Onboarding flag: true once the user has finished or skipped
+  /// onboarding. Missing means "not seen yet" (first run).
+  bool getOnboardingSeen() {
+    return _prefs.getBool(AppConstants.onboardingSeenKey) ?? false;
+  }
+
+  Future<bool> setOnboardingSeen() {
+    return _prefs.setBool(AppConstants.onboardingSeenKey, true);
+  }
 }

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
-/// Material 3 light theme.
+/// Material 3 light theme, in the Figma palette.
 ///
 /// `ColorScheme.fromSeed` builds the *entire* colour scheme (primary,
 /// surfaces, error, on-colours) from one seed colour, so every widget
 /// that uses `colorScheme` automatically matches. The overrides below
-/// only pin down the details that matter: AppBar and scaffold use the
-/// surface colour, cards are flat (`elevation: 0`) with a low surface
-/// container, and filled buttons use the primary colour. The dark
+/// only pin down the details that matter: the scaffold uses the Figma
+/// off-white background (`#FAFAFA`), cards are flat (`elevation: 0`)
+/// with the mint card colour, and filled buttons use the Figma teal
+/// with the Figma corner radius (12) and full-width padding. The dark
 /// theme mirrors this file on purpose, so the two themes stay in sync.
 ThemeData buildLightTheme() {
   final ColorScheme colorScheme = ColorScheme.fromSeed(
@@ -20,21 +21,38 @@ ThemeData buildLightTheme() {
     useMaterial3: true,
     colorScheme: colorScheme,
     brightness: Brightness.light,
+    scaffoldBackgroundColor: AppColors.background,
     appBarTheme: AppBarTheme(
-      backgroundColor: colorScheme.surface,
-      foregroundColor: colorScheme.onSurface,
+      backgroundColor: AppColors.background,
+      foregroundColor: AppColors.heading,
       centerTitle: true,
     ),
-    scaffoldBackgroundColor: colorScheme.surface,
     cardTheme: CardThemeData(
-      color: colorScheme.surfaceContainerLow,
+      color: AppColors.mint,
       elevation: 0,
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: AppColors.primary,
+        backgroundColor: colorScheme.surface,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: AppColors.primary),
     ),
   );
 }

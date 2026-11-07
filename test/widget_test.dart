@@ -1,4 +1,4 @@
-/// Widget tests for the M0 shell: the home screen and the settings screen.
+/// Widget tests for the app shell: splash -> onboarding -> home.
 ///
 /// Unlike the unit tests in `app_cubit_test.dart`, these tests build
 /// the real [BaytariApp] widget tree (`pumpWidget`) and interact with
@@ -25,34 +25,40 @@ void main() {
     await sl.reset();
   });
 
-  // Proves the defaults end-to-end: Arabic strings on screen
-  // (title, welcome), the demo-mode banner (no Supabase keys in
-  // tests), and the entry point to Settings. The Arabic strings are
-  // asserted literally — if the ARB files or the default locale
-  // break, this test fails.
-  testWidgets('home shell renders with Arabic default', (
+  // Proves the first-run flow end-to-end: the splash screen shows,
+  // then (after its ~2s timer) the user lands on onboarding in
+  // Arabic (the default locale), with the Figma titles and Skip.
+  testWidgets('first run shows splash then onboarding', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const BaytariApp());
+    // pumpAndSettle alone does not advance the splash Timer, so
+    // advance fake time explicitly, then settle the navigation.
+    await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
 
-    // Arabic default: the app title and welcome text in Arabic.
-    expect(find.text('بيطري'), findsWidgets);
-    expect(find.text('أهلاً بك في بيطري'), findsOneWidget);
-    // Supabase is not configured in tests — the demo-mode banner shows.
-    expect(find.text('لم يتم إعداد Supabase بعد. التطبيق يعمل في وضع العرض.'),
-        findsOneWidget);
-    // Settings entry point is present.
-    expect(find.text('الإعدادات'), findsOneWidget);
+    expect(find.text('مساعدة الحيوانات الضالة'), findsOneWidget);
+    expect(find.text('تخطي'), findsOneWidget);
+    expect(find.text('ابدأ'), findsOneWidget);
   });
 
-  // Proves navigation works: tapping the Settings button opens the
-  // settings screen, which must show both the language and the theme
-  // controls (Arabic label, light/dark options).
-  testWidgets('settings screen opens and shows language and theme',
-      (WidgetTester tester) async {
+  // Proves the guest flow: Skip onboarding -> Get Started ->
+  // "Join as a guest" -> home (demo mode, no Supabase), where the
+  // settings screen opens and shows both language and theme.
+  testWidgets('guest flow reaches home and settings', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const BaytariApp());
+    await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
+
+    await tester.tap(find.text('تخطي'));
+    await tester.pumpAndSettle();
+    expect(find.text('المتابعة كضيف'), findsOneWidget);
+
+    await tester.tap(find.text('المتابعة كضيف'));
+    await tester.pumpAndSettle();
+    expect(find.text('أهلاً بك في بيطري'), findsOneWidget);
 
     await tester.tap(find.text('الإعدادات'));
     await tester.pumpAndSettle();

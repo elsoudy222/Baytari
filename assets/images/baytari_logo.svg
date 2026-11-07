@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" role="img" aria-label="Baytari logo">
+  <!-- Baytari logo (mark only — the wordmark is rendered in Flutter).
+       Teal location pin (#3E8E83) with a white inner circle, an orange
+       dog face (left) and a teal cat face (right) inside it, echoing
+       the original Animap pin mark and the generated PNG logo. -->
+  <path fill="#3E8E83" d="M100 4C55 4 19 40 19 85c0 57 81 139 81 139s81-82 81-139C181 40 145 4 100 4Z"/>
+  <circle cx="100" cy="84" r="56" fill="#FAFAFA"/>
+  <!-- Dog: orange head with floppy ears. -->
+  <ellipse cx="62" cy="82" rx="12" ry="20" fill="#E8722A"/>
+  <ellipse cx="104" cy="82" rx="12" ry="20" fill="#E8722A"/>
+  <circle cx="83" cy="88" r="26" fill="#F59A3E"/>
+  <circle cx="74" cy="84" r="3" fill="#223F3C"/>
+  <circle cx="92" cy="84" r="3" fill="#223F3C"/>
+  <ellipse cx="83" cy="96" rx="5" ry="4" fill="#223F3C"/>
+  <!-- Cat: teal head with pointed ears. -->
+  <path fill="#3E8E83" d="M118 62l8-14 10 12 14-10 6 16c6 6 8 12 8 18a30 30 0 1 1-60 0c0-8 6-16 14-22Z"/>
+  <circle cx="132" cy="88" r="3" fill="#FAFAFA"/>
+  <circle cx="150" cy="88" r="3" fill="#FAFAFA"/>
+</svg>

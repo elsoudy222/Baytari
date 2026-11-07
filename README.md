@@ -16,6 +16,10 @@ and Supabase.
 > **شرح M1 بالعربي:** `./M1_EXPLANATION_AR.md` — Auth + Profiles:
 > the auth flow, the `profiles` table + RLS, session persistence,
 > how to apply the SQL migration, and how to run with `--dart-define`.
+>
+> **Splash + Onboarding + شعار بيطري:** `./ONBOARDING_EXPLANATION_AR.md` —
+> the Figma palette, the logo, the splash/onboarding/get-started flow,
+> and what is a simplified placeholder vs the Figma artwork.
 
 ## Run
 

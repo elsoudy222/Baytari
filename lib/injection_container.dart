@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/di/register_core.dart';
 import 'features/auth/di/register_auth.dart';
+import 'features/onboarding/di/register_onboarding.dart';
 
 /// The service locator. All dependencies are registered here, in
 /// dependency order, and nowhere else. Widgets and Cubits never create
@@ -29,4 +30,5 @@ Future<void> configureDependencies(SharedPreferences prefs) async {
   // Feature registrations, in dependency order:
   // data source -> repository -> use cases -> cubit.
   registerAuth(sl);
+  registerOnboarding(sl);
 }
