@@ -1,9 +1,10 @@
 /// Get Started screen — from the Figma `Get_Started.png`.
 ///
-/// Layout: the logo mark top-left, a large illustration area
-/// (simplified placeholder, see [OnboardingIllustrationWidget]),
-/// the invite text, a teal "Log In" button, a white "Sign Up"
-/// button, and a "Join as a guest" text link.
+/// Layout: the logo mark top-left, the real Figma illustration
+/// (the animals art cropped from `Get_Started.png`, see
+/// [OnboardingIllustrationWidget]), the invite text, a teal
+/// "Log In" button, a white "Sign Up" button, and a "Join as a
+/// guest" text link.
 ///
 /// Behaviour:
 /// - "Log In" -> `/login`, "Sign Up" -> `/register` (the existing
@@ -51,7 +52,7 @@ class GetStartedScreen extends StatelessWidget {
               const SizedBox(height: 16),
               const Expanded(
                 child: OnboardingIllustrationWidget(
-                  variant: OnboardingIllustration.strayAnimals,
+                  variant: OnboardingIllustration.getStarted,
                 ),
               ),
               Text(

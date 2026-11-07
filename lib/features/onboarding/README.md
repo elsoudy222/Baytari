@@ -18,6 +18,12 @@ Palette sampled from the Figma screenshots the user sent
 (`AppColors`): teal `#3E8E83`, orange `#F15B2A`, dark teal heading
 `#223F3C`, peach blob `#F2DEC5`, mint card `#EAF6F2`, background
 `#FAFAFA`. The illustrations are simplified placeholders (blob +
-icon) in that palette — not the Figma artwork. The logo is
-`assets/images/baytari_logo.png` (generated) + `baytari_logo.svg`
-(vector mark), rendered by `core/widgets/baytari_logo.dart`.
+icon) in that palette — not the Figma artwork. The logo is v3:
+`assets/images/baytari_logo.png` (wide lockup: dog + cat icon,
+"Baytari" wordmark with an orange paw on the "i", "بيطري" underneath)
+and `assets/images/baytari_mark.png` (icon only, transparent
+background), rendered by `core/widgets/baytari_logo.dart`. v3 uses
+solid app-palette colours (orange dog `#F15B2A`, teal cat `#3E8E83`,
+"Bayt" dark teal `#223F3C` + "tari" teal) — the v2 gradient is gone.
+The old `baytari_logo.svg` (v1 pin mark) is no longer referenced by
+any code.

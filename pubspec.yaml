@@ -32,6 +32,11 @@ dependencies:
   google_fonts: ^6.2.1
   # Profile photo + licence photo (auth UI, Figma design).
   image_picker: ^1.1.2
+  # Vector illustrations — all artwork is SVG exported from Figma
+  # (onboarding, Get Started, splash loading cat, shelter card).
+  flutter_svg: ^2.0.17
+  # Toast messages (replaces SnackBar everywhere, user's choice).
+  fluttertoast: ^8.2.8
 
 dev_dependencies:
   flutter_test:
