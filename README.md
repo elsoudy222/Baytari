@@ -12,6 +12,10 @@ and Supabase.
 > explanation of the startup flow, Clean Architecture, theme, language,
 > DI, Dio, Supabase demo mode, routing, and tests. Every Dart file in
 > `lib/` and `test/` also carries explanatory comments in English.
+>
+> **شرح M1 بالعربي:** `./M1_EXPLANATION_AR.md` — Auth + Profiles:
+> the auth flow, the `profiles` table + RLS, session persistence,
+> how to apply the SQL migration, and how to run with `--dart-define`.
 
 ## Run
 
@@ -73,4 +77,8 @@ flutter test      # widget + unit tests for the home shell and AppCubit
 
 - M0: scaffold, theme, localization, routing, DI, Dio, Supabase
   service (not configured), home shell + settings — **done**.
-- M1: Auth + Profiles — next, using the Supabase project above.
+- M1: Auth + Profiles (Supabase Auth, role selection, profile
+  creation, session persistence, logout) — **done** on branch
+  `feature/auth`. Apply `supabase/migrations/20261107000001_auth_profiles.sql`
+  in the Supabase dashboard, then run with `--dart-define` (see above).
+- M2: Pets — next.

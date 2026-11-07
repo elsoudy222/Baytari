@@ -7,6 +7,8 @@ import '../../../../app/app_state.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/routing/app_router.dart';
 import '../../../../core/widgets/app_button.dart';
+import '../../../auth/presentation/cubit/auth_cubit.dart';
+import '../../../auth/presentation/cubit/auth_state.dart';
 
 /// M0 placeholder home shell. It shows only localized strings and
 /// theme colors, and links to Settings where language and theme can be
@@ -62,6 +64,32 @@ class HomeScreen extends StatelessWidget {
                                   : l10n.supabaseNotConfigured,
                             ),
                           ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    // Auth entry point (M1): signed-in users see
+                    // their name and a link to their profile;
+                    // everyone else gets the sign-in button.
+                    BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, authState) {
+                        if (authState.isAuthenticated &&
+                            authState.profile != null) {
+                          return Card(
+                            child: ListTile(
+                              leading: const Icon(Icons.person_outlined),
+                              title: Text(authState.profile!.fullName),
+                              trailing: TextButton(
+                                onPressed: () =>
+                                    context.go(AppRoutes.profile),
+                                child: Text(l10n.myProfile),
+                              ),
+                            ),
+                          );
+                        }
+                        return AppButton(
+                          label: l10n.login,
+                          onPressed: () => context.go(AppRoutes.login),
                         );
                       },
                     ),

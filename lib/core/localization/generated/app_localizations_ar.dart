@@ -10,10 +10,33 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get alreadyHaveAccount => 'لديك حساب بالفعل؟';
+
+  @override
   String get appTitle => 'بيطري';
 
   @override
   String get arabic => 'العربية';
+
+  @override
+  String get authError => 'حدث خطأ ما. حاول مرة أخرى.';
+
+  @override
+  String get authNotConfigured =>
+      'لم يتم إعداد Supabase، لذلك تسجيل الدخول غير متاح في وضع العرض.';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get editProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get emailConfirmationSent =>
+      'تم إنشاء الحساب! تحقق من بريدك الإلكتروني لتأكيد الحساب، ثم سجل الدخول.';
 
   @override
   String get emptyTitle => 'لا يوجد شيء هنا بعد';
@@ -25,11 +48,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errorTitle => 'حدث خطأ ما';
 
   @override
+  String get fullName => 'الاسم الكامل';
+
+  @override
   String get home => 'الرئيسية';
 
   @override
   String get homeDescription =>
       'هذه هي النسخة الأولية M0. سيتم إضافة المزايا واحدة تلو الأخرى: تسجيل الدخول، الحيوانات، الأطباء، المواعيد، الجدول، لوحة التحكم والإعدادات.';
+
+  @override
+  String get invalidEmail => 'أدخل بريداً إلكترونياً صحيحاً';
+
+  @override
+  String get invalidPhone => 'أدخل رقم هاتف صحيحاً';
 
   @override
   String get language => 'اللغة';
@@ -38,7 +70,55 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loading => 'جارٍ التحميل…';
 
   @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get myProfile => 'ملفي الشخصي';
+
+  @override
+  String get nameRequired => 'أدخل اسمك';
+
+  @override
+  String get noAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get passwordTooShort => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get phone => 'رقم الهاتف';
+
+  @override
+  String get phoneOptional => 'رقم الهاتف (اختياري)';
+
+  @override
+  String get profileSaved => 'تم حفظ الملف الشخصي';
+
+  @override
+  String get register => 'إنشاء حساب جديد';
+
+  @override
   String get retry => 'إعادة المحاولة';
+
+  @override
+  String get roleOwner => 'صاحب حيوان أليف';
+
+  @override
+  String get roleVet => 'طبيب بيطري';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get selectRole => 'اختر دورك';
 
   @override
   String get settings => 'الإعدادات';

@@ -16,6 +16,9 @@ abstract final class Validators {
   static bool isNotEmpty(String? value) =>
       value != null && value.trim().isNotEmpty;
 
+  /// Supabase requires a minimum of 6 characters for passwords.
+  static bool isValidPassword(String value) => value.length >= 6;
+
   /// A phone number is valid if, after removing everything that is
   /// not a digit (`+`, spaces, `-`), 10–15 digits remain — that range
   /// covers local and international numbers without hardcoding one
