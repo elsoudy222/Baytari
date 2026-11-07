@@ -20,6 +20,9 @@ class Profile extends Equatable {
     required this.role,
     this.phone,
     this.avatarUrl,
+    this.username,
+    this.licenseUrl,
+    this.workplaceNote,
     this.createdAt,
   });
 
@@ -35,9 +38,26 @@ class Profile extends Equatable {
   /// Optional phone number (may be empty for users who skipped it).
   final String? phone;
 
-  /// Optional avatar image URL (M1 has no upload yet — always null
-  /// until a later stage adds avatar upload to Storage).
+  /// Optional avatar image URL (uploaded to the `avatars` Storage
+  /// bucket from the sign-up "username + photo" step).
   final String? avatarUrl;
+
+  /// The username picked on the sign-up "Welcome To Baytari!" step.
+  /// Unique in the database (migration 20261107000002); null until
+  /// the user picks one.
+  final String? username;
+
+  /// Storage path of the licence photo, uploaded to the private
+  /// `licenses` bucket during vet / shelter sign-up ("Verify Your
+  /// License"). It is a storage *path* (not a public URL) because
+  /// the bucket is private — only the user and admins can open it.
+  final String? licenseUrl;
+
+  /// A pending text note for staff vets / shelter workers: the
+  /// clinic or shelter they said they work at. There are no
+  /// clinics / shelters in the database yet (M3/M5), so this is
+  /// free text for now, not a foreign key — see the Arabic doc.
+  final String? workplaceNote;
 
   final DateTime? createdAt;
 
@@ -51,6 +71,9 @@ class Profile extends Equatable {
     UserRole? role,
     String? phone,
     String? avatarUrl,
+    String? username,
+    String? licenseUrl,
+    String? workplaceNote,
     DateTime? createdAt,
   }) {
     return Profile(
@@ -60,6 +83,9 @@ class Profile extends Equatable {
       role: role ?? this.role,
       phone: phone ?? this.phone,
       avatarUrl: avatarUrl ?? this.avatarUrl,
+      username: username ?? this.username,
+      licenseUrl: licenseUrl ?? this.licenseUrl,
+      workplaceNote: workplaceNote ?? this.workplaceNote,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -72,6 +98,9 @@ class Profile extends Equatable {
     role,
     phone,
     avatarUrl,
+    username,
+    licenseUrl,
+    workplaceNote,
     createdAt,
   ];
 }

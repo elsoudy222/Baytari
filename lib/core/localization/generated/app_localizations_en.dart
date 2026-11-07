@@ -195,4 +195,218 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get welcomeMessage =>
       'Find a vet and book an appointment for your pet.';
+
+  @override
+  String get welcomeBack => 'Welcome back!';
+
+  @override
+  String get emailOrPhone => 'Email or Phone Number';
+
+  @override
+  String get forgotPassword => 'Forgot your password?';
+
+  @override
+  String get orLogInWith => 'or log in with';
+
+  @override
+  String get orSignUpWith => 'or sign up with';
+
+  @override
+  String get socialComingSoon => 'Social sign-in is coming soon';
+
+  @override
+  String get termsAgreement => 'By continuing, you agree to our';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get communityMember => 'Community Member';
+
+  @override
+  String get veterinarian => 'Veterinarian';
+
+  @override
+  String get shelter => 'Shelter';
+
+  @override
+  String get accountInformation => 'Account Information';
+
+  @override
+  String get firstName => 'First Name';
+
+  @override
+  String get lastName => 'Last Name';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get setYourPassword => 'Set Your Password';
+
+  @override
+  String get createPassword => 'Create Password';
+
+  @override
+  String get passwordRuleLength => 'at least 8 characters.';
+
+  @override
+  String get passwordRuleCase => 'uppercase and lowercase letters';
+
+  @override
+  String get passwordRuleNumber => 'at least one number';
+
+  @override
+  String get verifyYourEmail =>
+      'We\'ve sent a verification code to your Email. Please enter the code below to verify your Email';
+
+  @override
+  String get didNotReceiveCode => 'Didn\'t receive code?';
+
+  @override
+  String get resendCode => 'Resend Code';
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get verifyCode => 'Verify Code';
+
+  @override
+  String get wrongCode => 'Wrong Code. Please try again or reset your code.';
+
+  @override
+  String get clinicOwner => 'Clinic owner';
+
+  @override
+  String get staffVet => 'Staff vet';
+
+  @override
+  String get pickClinic => 'Pick the clinic you work with';
+
+  @override
+  String get shelterOwner => 'Shelter owner';
+
+  @override
+  String get shelterWorker => 'Shelter worker';
+
+  @override
+  String get pickShelter => 'Pick the shelter you work with';
+
+  @override
+  String get workplaceComingSoon =>
+      'Clinics and shelters will be added soon — your choice is saved as a note for now.';
+
+  @override
+  String get verifyYourLicense => 'Verify Your License';
+
+  @override
+  String get takeLicensePhoto => 'Tap to take a photo of your license';
+
+  @override
+  String get uploadPhoto => 'Upload Photo';
+
+  @override
+  String get retake => 'Retake';
+
+  @override
+  String get choosePhotoSource => 'Choose how to add the photo';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get welcomeToBaytari => 'Welcome To Baytari!';
+
+  @override
+  String get pickUsernameMessage =>
+      'Let\'s make your profile unique! Pick a username that represents you within our community. This will be your identity as you explore, report, and connect with others on Baytari.';
+
+  @override
+  String get addProfilePhoto => 'Add Profile Photo';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get usernameRequired => 'Please pick a username';
+
+  @override
+  String get usernameTaken =>
+      'This username is already taken, please pick another one';
+
+  @override
+  String get accountReady => 'Welcome! Your Account is Ready';
+
+  @override
+  String get accountReadyCommunity =>
+      'You can now start exploring the app and connecting with your local community!';
+
+  @override
+  String get accountReadyVet =>
+      'You can now manage your clinic, take appointments, and connect with the community.';
+
+  @override
+  String get goToHome => 'Go to Home';
+
+  @override
+  String get resetYourPassword => 'Reset Your Password';
+
+  @override
+  String get resetPasswordMessage =>
+      'Enter your email address below to receive a one-time password (OTP) for resetting your password';
+
+  @override
+  String get sendOtp => 'Send OTP';
+
+  @override
+  String get enterVerificationCode => 'Enter Verification Code';
+
+  @override
+  String get enterVerificationCodeMessage =>
+      'We\'ve sent a verification code to your email. Please enter the code below to reset your password';
+
+  @override
+  String get createNewPassword => 'Create New Password';
+
+  @override
+  String get confirmNewPassword => 'Confirm New Password';
+
+  @override
+  String get passwordResetSuccess => 'Your Password Was Reset Successfully!';
+
+  @override
+  String get passwordResetSuccessMessage =>
+      'Your password has been successfully reset. You can now sign in using your new password';
+
+  @override
+  String get selectCountry => 'Select country';
+
+  @override
+  String get otpSent => 'Verification code sent';
+
+  @override
+  String get licenseRequired =>
+      'Please upload a photo of your license to continue';
+
+  @override
+  String get emailOnlyOtp => 'Verification codes are sent to your email';
+
+  @override
+  String get termsAnd => 'and';
 }

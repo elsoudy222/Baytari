@@ -8,6 +8,11 @@
 ///
 /// The `params` are named (not a separate params class) because
 /// there are only a few of them and they are self-explanatory.
+///
+/// `workplaceNote` is the staff vet / shelter worker note ("works
+/// at clinic/shelter X") — it travels in the auth metadata so the
+/// profile row keeps it even when email confirmation delays the
+/// row creation until the first sign-in.
 library;
 
 import '../../../../core/errors/result.dart';
@@ -26,6 +31,7 @@ class SignUpUseCase {
     required String fullName,
     required UserRole role,
     String? phone,
+    String? workplaceNote,
   }) {
     return _repository.signUp(
       email: email,
@@ -33,6 +39,7 @@ class SignUpUseCase {
       fullName: fullName,
       role: role,
       phone: phone,
+      workplaceNote: workplaceNote,
     );
   }
 }

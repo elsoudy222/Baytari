@@ -175,7 +175,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return switch (role) {
       UserRole.owner => context.l10n.roleOwner,
       UserRole.vet => context.l10n.roleVet,
-      UserRole.staffVet || UserRole.clinicAdmin => role.value,
+      UserRole.staffVet ||
+              UserRole.clinicAdmin ||
+              UserRole.shelterOwner ||
+              UserRole.shelterWorker =>
+          role.value,
     };
   }
 

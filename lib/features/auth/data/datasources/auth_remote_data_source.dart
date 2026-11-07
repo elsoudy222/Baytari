@@ -21,6 +21,7 @@ abstract class AuthRemoteDataSource {
     required String fullName,
     required UserRole role,
     String? phone,
+    String? workplaceNote,
   });
 
   /// Signs in and returns the profile.
@@ -39,8 +40,42 @@ abstract class AuthRemoteDataSource {
   Future<ProfileModel?> getCurrentProfile();
 
   /// Updates the current user's profile and returns the new row.
+  /// Only non-null fields are written (see `ProfileModel.toUpdateJson`).
   Future<ProfileModel> updateProfile({
     required String fullName,
     String? phone,
+    String? username,
+    String? avatarUrl,
+    String? licenseUrl,
+    String? workplaceNote,
   });
+
+  /// Sends a 6-digit email OTP for sign-up verification.
+  Future<void> requestSignupOtp({required String email});
+
+  /// Verifies the sign-up OTP and returns the profile.
+  Future<ProfileModel> verifySignupOtp({
+    required String email,
+    required String token,
+  });
+
+  /// Sends a 6-digit email OTP for password recovery.
+  Future<void> requestPasswordReset({required String email});
+
+  /// Verifies the recovery OTP (creates a recovery session).
+  Future<void> verifyRecoveryOtp({
+    required String email,
+    required String token,
+  });
+
+  /// Sets the new password for the recovery session, then signs out.
+  Future<void> resetPassword({required String newPassword});
+
+  /// Uploads an avatar photo to the `avatars` bucket, returns the
+  /// public URL.
+  Future<String> uploadAvatar(List<int> bytes);
+
+  /// Uploads a licence photo to the private `licenses` bucket,
+  /// returns the storage path.
+  Future<String> uploadLicense(List<int> bytes);
 }

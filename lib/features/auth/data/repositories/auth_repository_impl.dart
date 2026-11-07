@@ -38,6 +38,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String fullName,
     required UserRole role,
     String? phone,
+    String? workplaceNote,
   }) async {
     try {
       final ProfileModel? profile = await _remoteDataSource.signUp(
@@ -46,6 +47,7 @@ class AuthRepositoryImpl implements AuthRepository {
         fullName: fullName,
         role: role,
         phone: phone,
+        workplaceNote: workplaceNote,
       );
       return Success<Profile?>(profile);
     } on AppException catch (e) {
@@ -94,15 +96,129 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<Profile>> updateProfile({
     required String fullName,
     String? phone,
+    String? username,
+    String? avatarUrl,
+    String? licenseUrl,
+    String? workplaceNote,
   }) async {
     try {
       final ProfileModel profile = await _remoteDataSource.updateProfile(
         fullName: fullName,
         phone: phone,
+        username: username,
+        avatarUrl: avatarUrl,
+        licenseUrl: licenseUrl,
+        workplaceNote: workplaceNote,
       );
       return Success<Profile>(profile);
     } on AppException catch (e) {
       return FailureResult<Profile>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<void>> requestSignupOtp({required String email}) async {
+    try {
+      await _remoteDataSource.requestSignupOtp(email: email);
+      return const Success<void>(null);
+    } on AppException catch (e) {
+      return FailureResult<void>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<Profile>> verifySignupOtp({
+    required String email,
+    required String token,
+  }) async {
+    try {
+      final ProfileModel profile = await _remoteDataSource.verifySignupOtp(
+        email: email,
+        token: token,
+      );
+      return Success<Profile>(profile);
+    } on AppException catch (e) {
+      return FailureResult<Profile>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<void>> requestPasswordReset({required String email}) async {
+    try {
+      await _remoteDataSource.requestPasswordReset(email: email);
+      return const Success<void>(null);
+    } on AppException catch (e) {
+      return FailureResult<void>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<void>> verifyRecoveryOtp({
+    required String email,
+    required String token,
+  }) async {
+    try {
+      await _remoteDataSource.verifyRecoveryOtp(email: email, token: token);
+      return const Success<void>(null);
+    } on AppException catch (e) {
+      return FailureResult<void>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<void>> resetPassword({required String newPassword}) async {
+    try {
+      await _remoteDataSource.resetPassword(newPassword: newPassword);
+      return const Success<void>(null);
+    } on AppException catch (e) {
+      return FailureResult<void>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<Profile>> updateUsernameAndAvatar({
+    String? username,
+    String? avatarUrl,
+  }) async {
+    try {
+      // The current name/phone come from the signed-in profile:
+      // the data source's update only writes non-null fields, so
+      // passing the existing values back is safe and keeps the
+      // profile screen's `updateProfile` contract untouched.
+      final ProfileModel? current = await _remoteDataSource
+          .getCurrentProfile();
+      if (current == null) {
+        throw const AuthException('No signed-in user.');
+      }
+      final ProfileModel profile = await _remoteDataSource.updateProfile(
+        fullName: current.fullName,
+        phone: current.phone,
+        username: username,
+        avatarUrl: avatarUrl,
+      );
+      return Success<Profile>(profile);
+    } on AppException catch (e) {
+      return FailureResult<Profile>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<String>> uploadLicense(List<int> bytes) async {
+    try {
+      final String path = await _remoteDataSource.uploadLicense(bytes);
+      return Success<String>(path);
+    } on AppException catch (e) {
+      return FailureResult<String>(_mapException(e));
+    }
+  }
+
+  @override
+  Future<Result<String>> uploadAvatar(List<int> bytes) async {
+    try {
+      final String url = await _remoteDataSource.uploadAvatar(bytes);
+      return Success<String>(url);
+    } on AppException catch (e) {
+      return FailureResult<String>(_mapException(e));
     }
   }
 

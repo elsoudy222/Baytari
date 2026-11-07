@@ -20,6 +20,12 @@ and Supabase.
 > **Splash + Onboarding + شعار بيطري:** `./ONBOARDING_EXPLANATION_AR.md` —
 > the Figma palette, the logo, the splash/onboarding/get-started flow,
 > and what is a simplified placeholder vs the Figma artwork.
+>
+> **شرح Auth UI بالعربي:** `./AUTH_UI_EXPLANATION_AR.md` — the Figma
+> login / multi-step sign-up / forgot-password rebuild: email OTP
+> (6 boxes — Supabase codes are 6 digits minimum), username + photo,
+> licence verification, the `20261107000002_auth_ui.sql` migration
+> (not yet applied), and the Supabase settings to check.
 
 ## Run
 
@@ -85,4 +91,12 @@ flutter test      # widget + unit tests for the home shell and AppCubit
   creation, session persistence, logout) — **done** on branch
   `feature/auth`. Apply `supabase/migrations/20261107000001_auth_profiles.sql`
   in the Supabase dashboard, then run with `--dart-define` (see above).
-- M2: Pets — next.
+- Auth UI (feature/auth-ui): Figma login redesign, multi-step sign-up
+  wizard (roles, password rules, licence verification, email OTP,
+  username + photo, confirmation), forgot-password flow (OTP, new
+  password, success), new roles `shelter_owner` / `shelter_worker`,
+  `avatars` + `licenses` storage buckets — **done, not yet merged**.
+  Apply `supabase/migrations/20261107000002_auth_ui.sql` in the
+  Supabase dashboard (NOT yet applied) and check the email-OTP settings
+  in `./AUTH_UI_EXPLANATION_AR.md` before live-testing sign-up.
+- M2: Pets — next, only after the auth part is fully finished.

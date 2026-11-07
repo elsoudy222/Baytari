@@ -27,6 +27,7 @@ class FakeAuthRepository implements AuthRepository {
     required String fullName,
     required UserRole role,
     String? phone,
+    String? workplaceNote,
   }) async {
     calls.add('signUp');
     if (failure != null) {
@@ -69,14 +70,108 @@ class FakeAuthRepository implements AuthRepository {
   Future<Result<Profile>> updateProfile({
     required String fullName,
     String? phone,
+    String? username,
+    String? avatarUrl,
+    String? licenseUrl,
+    String? workplaceNote,
   }) async {
     calls.add('updateProfile');
     if (failure != null) {
       return FailureResult<Profile>(failure!);
     }
     return Success<Profile>(
-      profileToReturn!.copyWith(fullName: fullName, phone: phone),
+      profileToReturn!.copyWith(
+        fullName: fullName,
+        phone: phone,
+        username: username,
+        avatarUrl: avatarUrl,
+        licenseUrl: licenseUrl,
+        workplaceNote: workplaceNote,
+      ),
     );
+  }
+
+  @override
+  Future<Result<void>> requestSignupOtp({required String email}) async {
+    calls.add('requestSignupOtp');
+    if (failure != null) {
+      return FailureResult<void>(failure!);
+    }
+    return const Success<void>(null);
+  }
+
+  @override
+  Future<Result<Profile>> verifySignupOtp({
+    required String email,
+    required String token,
+  }) async {
+    calls.add('verifySignupOtp');
+    if (failure != null) {
+      return FailureResult<Profile>(failure!);
+    }
+    return Success<Profile>(profileToReturn!);
+  }
+
+  @override
+  Future<Result<void>> requestPasswordReset({required String email}) async {
+    calls.add('requestPasswordReset');
+    if (failure != null) {
+      return FailureResult<void>(failure!);
+    }
+    return const Success<void>(null);
+  }
+
+  @override
+  Future<Result<void>> verifyRecoveryOtp({
+    required String email,
+    required String token,
+  }) async {
+    calls.add('verifyRecoveryOtp');
+    if (failure != null) {
+      return FailureResult<void>(failure!);
+    }
+    return const Success<void>(null);
+  }
+
+  @override
+  Future<Result<void>> resetPassword({required String newPassword}) async {
+    calls.add('resetPassword');
+    if (failure != null) {
+      return FailureResult<void>(failure!);
+    }
+    return const Success<void>(null);
+  }
+
+  @override
+  Future<Result<Profile>> updateUsernameAndAvatar({
+    String? username,
+    String? avatarUrl,
+  }) async {
+    calls.add('updateUsernameAndAvatar');
+    if (failure != null) {
+      return FailureResult<Profile>(failure!);
+    }
+    return Success<Profile>(
+      profileToReturn!.copyWith(username: username, avatarUrl: avatarUrl),
+    );
+  }
+
+  @override
+  Future<Result<String>> uploadLicense(List<int> bytes) async {
+    calls.add('uploadLicense');
+    if (failure != null) {
+      return FailureResult<String>(failure!);
+    }
+    return const Success<String>('licenses/user-id-1/license.jpg');
+  }
+
+  @override
+  Future<Result<String>> uploadAvatar(List<int> bytes) async {
+    calls.add('uploadAvatar');
+    if (failure != null) {
+      return FailureResult<String>(failure!);
+    }
+    return const Success<String>('https://example.com/avatar.jpg');
   }
 }
 

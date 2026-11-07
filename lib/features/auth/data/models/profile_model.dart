@@ -19,6 +19,9 @@ class ProfileModel extends Profile {
     required super.role,
     super.phone,
     super.avatarUrl,
+    super.username,
+    super.licenseUrl,
+    super.workplaceNote,
     super.createdAt,
   });
 
@@ -34,6 +37,9 @@ class ProfileModel extends Profile {
       role: UserRole.fromString(json['role'] as String?),
       phone: json['phone'] as String?,
       avatarUrl: json['avatar_url'] as String?,
+      username: json['username'] as String?,
+      licenseUrl: json['license_url'] as String?,
+      workplaceNote: json['workplace_note'] as String?,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.tryParse(json['created_at'] as String),
@@ -57,12 +63,17 @@ class ProfileModel extends Profile {
       fullName: metadata?['full_name'] as String? ?? '',
       role: UserRole.fromString(metadata?['role'] as String?),
       phone: metadata?['phone'] as String?,
+      username: metadata?['username'] as String?,
+      workplaceNote: metadata?['workplace_note'] as String?,
     );
   }
 
   /// The map written to the `profiles` table on INSERT. `id` is
   /// included: the profile row's id IS the auth user id (the
-  /// migration makes it a foreign key to `auth.users`).
+  /// migration makes it a foreign key to `auth.users`). The new
+  /// columns (`username`, `license_url`, `workplace_note`) come
+  /// from migration 20261107000002 — apply it before running this
+  /// code, or the insert fails on the unknown columns.
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
@@ -71,18 +82,26 @@ class ProfileModel extends Profile {
       'role': role.value,
       'phone': phone,
       'avatar_url': avatarUrl,
+      'username': username,
+      'license_url': licenseUrl,
+      'workplace_note': workplaceNote,
     };
   }
 
   /// The map written on UPDATE: only the fields a user may change
   /// themselves. `role` is deliberately absent — a user must not
   /// promote themselves to vet by editing a form (see
-  /// `UpdateProfileUseCase`).
+  /// `UpdateProfileUseCase`). Null values are dropped by the
+  /// caller (`updateProfile` in the data source) so an update of
+  /// the name never wipes the avatar or username.
   Map<String, dynamic> toUpdateJson() {
     return <String, dynamic>{
       'full_name': fullName,
       'phone': phone,
       'avatar_url': avatarUrl,
+      'username': username,
+      'license_url': licenseUrl,
+      'workplace_note': workplaceNote,
     };
   }
 }
