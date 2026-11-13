@@ -33,9 +33,14 @@ import 'package:baytari/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:baytari/features/auth/presentation/cubit/auth_state.dart';
 import 'package:baytari/features/auth/presentation/screens/login_screen.dart';
 import 'package:baytari/features/auth/presentation/screens/register_screen.dart';
+import 'package:baytari/features/home/domain/usecases/get_reports_usecase.dart';
+import 'package:baytari/features/home/domain/usecases/set_report_status_usecase.dart';
+import 'package:baytari/features/home/domain/usecases/toggle_helper_usecase.dart';
+import 'package:baytari/features/home/presentation/cubit/home_feed_cubit.dart';
 import 'package:baytari/features/home/presentation/screens/home_screen.dart';
 import 'package:baytari/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:baytari/features/onboarding/presentation/screens/get_started_screen.dart';
+import 'package:baytari/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -44,6 +49,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auth/fake_auth_repository.dart';
+import '../../features/home/fake_home_repository.dart';
 
 AuthCubit _buildCubit(FakeAuthRepository repository) {
   return AuthCubit(
@@ -80,6 +86,18 @@ void main() {
     authCubit = _buildCubit(repository);
     onboardingCubit = OnboardingCubit(settings);
     appCubit = AppCubit(settings, SupabaseService());
+    // The Home screen builds its feed Cubit from GetIt, so the
+    // tests register a factory backed by the fake home
+    // repository (empty feed). Without this, pumping `/` throws
+    // because the Cubit is unregistered.
+    final FakeHomeRepository homeRepository = FakeHomeRepository();
+    sl.registerFactory<HomeFeedCubit>(
+      () => HomeFeedCubit(
+        getReportsUseCase: GetReportsUseCase(homeRepository),
+        toggleHelperUseCase: ToggleHelperUseCase(homeRepository),
+        setReportStatusUseCase: SetReportStatusUseCase(homeRepository),
+      ),
+    );
     router = AppRouter.create(
       authCubit: authCubit,
       onboardingCubit: onboardingCubit,
@@ -94,6 +112,9 @@ void main() {
     await authCubit.close();
     await onboardingCubit.close();
     await appCubit.close();
+    // Drop the GetIt registrations above so they cannot leak
+    // into another test file.
+    await sl.reset();
   });
 
   Future<void> pumpRouter(WidgetTester tester) async {

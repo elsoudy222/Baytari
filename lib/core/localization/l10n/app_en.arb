@@ -126,5 +126,109 @@
   "otpSent": "Verification code sent",
   "licenseRequired": "Please upload a photo of your license to continue",
   "emailOnlyOtp": "Verification codes are sent to your email",
-  "termsAnd": "and"
+  "termsAnd": "and",
+  "homeWelcome": "Welcome,",
+  "searchHint": "Search",
+  "filterAll": "All",
+  "filterStray": "Stray",
+  "filterLost": "Lost",
+  "filterAdoption": "Adoption",
+  "reportAnimalTitle": "Report an Animal",
+  "reportAnimalDescription": "Help us locate and assist stray animals. Report an animal's sighting or condition here.",
+  "reportAnimalButton": "Report Animal",
+  "shareStatusUpdate": "Share Status Update",
+  "help": "Help",
+  "comment": "comment",
+  "send": "Send",
+  "showMore": "show more",
+  "showLess": "show less",
+  "categoryStrayAnimal": "Stray Animal",
+  "categoryLostPet": "Lost Pet",
+  "categoryAdoptable": "Adoptable",
+  "priorityUrgent": "Urgent",
+  "priorityHigh": "High Priority",
+  "priorityMid": "Mid Priority",
+  "priorityLow": "Low Priority",
+  "animalDog": "Dog",
+  "animalCat": "Cat",
+  "animalOther": "Other",
+  "statusSighted": "Sighted",
+  "statusRescued": "Rescued",
+  "statusInShelter": "In Shelter",
+  "statusAtVet": "at VET",
+  "statusCouldntFind": "Couldn't find",
+  "statusInSafeHands": "In Safe Hands",
+  "statusNotFound": "Not Found",
+  "statusInterested": "Interested",
+  "statusReadyToAdopt": "Ready to Adopt",
+  "statusInProcess": "In Process",
+  "statusAdopted": "Adopted",
+  "mapTab": "Map",
+  "communityTab": "Community",
+  "vetsTab": "Vets",
+  "sheltersTab": "Shelters",
+  "comingSoon": "Coming soon",
+  "comingSoonMessage": "This section is coming soon.",
+  "shareComingSoon": "Sharing is coming soon",
+  "noReports": "No reports yet",
+  "noReportsMessage": "Be the first to report an animal that needs help.",
+  "filterTitle": "Filter",
+  "filterPriority": "Priority",
+  "filterAnimal": "Animal type",
+  "clearFilters": "Clear",
+  "applyFilters": "Apply",
+  "createReportTitle": "Report an Animal",
+  "categoryLabel": "Category",
+  "priorityLabel": "Priority",
+  "animalTypeLabel": "Animal type",
+  "descriptionLabel": "Description",
+  "descriptionHint": "Describe the animal, its condition and where you saw it...",
+  "locationLabel": "Location",
+  "locationHint": "Street, area, city",
+  "addPhotos": "Add photos",
+  "submitReport": "Submit Report",
+  "reportCreated": "Report submitted. Thank you for helping!",
+  "formIncomplete": "Please choose a category, priority and animal type",
+  "descriptionRequired": "Please describe the animal",
+  "commentsTitle": "Comments",
+  "noCommentsYet": "No comments yet. Be the first to help!",
+  "writeComment": "Write a comment ...",
+  "like": "Like",
+  "unlike": "unlike",
+  "reply": "Reply",
+  "@helpersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "helpersCount": "{count} helpers",
+  "@commentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commentsCount": "{count} comments",
+  "@commentsHeader": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commentsHeader": "{author} and {count} Helpers",
+  "@replyingTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "replyingTo": "Replying to {name}"
 }

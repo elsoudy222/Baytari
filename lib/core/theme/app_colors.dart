@@ -58,6 +58,18 @@ abstract final class AppColors {
   static const Color lightSeed = primary;
   static const Color darkSeed = primaryLight;
 
+  /// Pale yellow of the "Sighted" status chip and the "Sighted"
+  /// comment bubble (Home feed, sampled from Figma).
+  static const Color statusYellow = Color(0xFFF9E79F);
+
+  /// Peach-orange of the "Couldn't find" status chip and bubble
+  /// (Home feed, sampled from Figma).
+  static const Color statusPeach = Color(0xFFF5CBA7);
+
+  /// Brown of the "Mid Priority" label on a post header (Home
+  /// feed, sampled from Figma).
+  static const Color priorityMid = Color(0xFF8B5E34);
+
   static const Color error = Color(0xFFB3261E);
 
   /// Facebook brand blue, used only by the (UI-only) Facebook

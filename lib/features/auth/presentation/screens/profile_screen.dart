@@ -14,8 +14,10 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
+import '../../../../core/routing/app_router.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/dialogs/app_toast.dart';
@@ -84,6 +86,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             leading: const Icon(Icons.phone_outlined),
                             title: Text(profile.phone!),
                           ),
+                        // Settings (language/theme) live here until
+                        // Figma's side Menu is built: the Home feed
+                        // has no settings button of its own, and the
+                        // avatar is the way in.
+                        ListTile(
+                          leading: const Icon(Icons.settings_outlined),
+                          title: Text(l10n.settings),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => context.go(AppRoutes.settings),
+                        ),
                       ],
                     ),
                   ),

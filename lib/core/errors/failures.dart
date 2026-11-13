@@ -43,3 +43,11 @@ class AuthFailure extends Failure {
 class NotConfiguredFailure extends Failure {
   const NotConfiguredFailure(super.message);
 }
+
+/// The input itself is invalid (empty description, missing
+/// field, ...). Returned by use cases that validate before any
+/// network call, so the UI can show a field error instead of a
+/// server error.
+class ValidationFailure extends Failure {
+  const ValidationFailure(super.message);
+}
