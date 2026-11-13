@@ -440,5 +440,96 @@ void main() {
 
       expect(find.text('عيّن كلمة المرور'), findsOneWidget);
     });
+
+    /// Drives the wizard from the role step to the password step
+    /// for [roleLabel], filling the information form on the way.
+    Future<void> driveToPasswordStep(
+      WidgetTester tester, {
+      required String roleLabel,
+    }) async {
+      await pumpRegister(tester);
+
+      await tester.tap(find.text(roleLabel));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'الاسم الأول'),
+        'Ahmed',
+      );
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'اسم العائلة'),
+        'Mohamed',
+      );
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'البريد الإلكتروني'),
+        'new@example.com',
+      );
+      final Finder nextButton = find.widgetWithText(FilledButton, 'التالي');
+      await tester.ensureVisible(nextButton);
+      await tester.pumpAndSettle();
+      await tester.tap(nextButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('عيّن كلمة المرور'), findsOneWidget);
+    }
+
+    /// Fills a strong password, confirms it, and submits — this
+    /// creates the account (the fake returns null to simulate
+    /// email confirmation ON: no session yet).
+    Future<void> submitPassword(WidgetTester tester) async {
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'أنشئ كلمة المرور'),
+        'Password123',
+      );
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'تأكيد كلمة المرور'),
+        'Password123',
+      );
+      final Finder nextButton = find.widgetWithText(FilledButton, 'التالي');
+      await tester.ensureVisible(nextButton);
+      await tester.pumpAndSettle();
+      await tester.tap(nextButton);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('vet under Confirm ON goes to the licence step before OTP',
+        (WidgetTester tester) async {
+      // Confirmation ON: sign-up returns no session.
+      repository.signUpProfile = null;
+
+      await driveToPasswordStep(tester, roleLabel: 'طبيب بيطري');
+      await submitPassword(tester);
+
+      // Before the fix the wizard jumped straight to the OTP boxes
+      // and the licence was never asked for under Confirm ON.
+      expect(find.text('تحقق من رخصتك'), findsOneWidget);
+      expect(
+        find.text(
+          'أرسلنا رمز تحقق إلى بريدك الإلكتروني. أدخل الرمز بالأسفل لتأكيد بريدك',
+        ),
+        findsNothing,
+      );
+      expect(repository.calls, contains('signUp'));
+      // The OTP is requested only from the licence step's Next.
+      expect(repository.calls, isNot(contains('requestSignupOtp')));
+    });
+
+    testWidgets('community member under Confirm ON goes straight to OTP',
+        (WidgetTester tester) async {
+      repository.signUpProfile = null;
+
+      await driveToPasswordStep(tester, roleLabel: 'عضو في المجتمع');
+      await submitPassword(tester);
+
+      // No licence for community members: the OTP boxes show.
+      expect(
+        find.text(
+          'أرسلنا رمز تحقق إلى بريدك الإلكتروني. أدخل الرمز بالأسفل لتأكيد بريدك',
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('تحقق من رخصتك'), findsNothing);
+      expect(repository.calls, contains('requestSignupOtp'));
+    });
   });
 }

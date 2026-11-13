@@ -12,6 +12,15 @@ import '../errors/exceptions.dart';
 /// catches that and lets the app run in a clearly-marked demo mode
 /// ([isConfigured] == false) instead of crashing.
 class SupabaseService {
+  /// Test-only seam: a client to return from [client] instead of
+  /// the global `Supabase.instance.client`. Production code never
+  /// passes one (GetIt registers `SupabaseService()` with no
+  /// arguments) — it exists so data-source tests can inject a fake
+  /// client without initializing real Supabase.
+  SupabaseService({this.testClient});
+
+  final SupabaseClient? testClient;
+
   bool _isConfigured = false;
 
   bool get isConfigured => _isConfigured;
@@ -19,6 +28,10 @@ class SupabaseService {
   /// The Supabase client. Throws [SupabaseNotConfiguredException] when
   /// the service was not configured — callers must check [isConfigured].
   SupabaseClient get client {
+    final SupabaseClient? override = testClient;
+    if (override != null) {
+      return override;
+    }
     if (!_isConfigured) {
       throw const SupabaseNotConfiguredException();
     }

@@ -227,13 +227,21 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
   @override
   Future<void> requestPasswordReset({required String email}) async {
     try {
-      // Same OTP mechanism as sign-up, but the code is a recovery
-      // code. `shouldCreateUser: false` again: an unknown email
-      // must fail instead of silently creating an account.
-      await _client.auth.signInWithOtp(
-        email: email,
-        shouldCreateUser: false,
-      );
+      // `resetPasswordForEmail` issues a RECOVERY token — the only
+      // token `verifyOTP(type: OtpType.recovery)` accepts. The
+      // previous call used `signInWithOtp`, which issues an
+      // email/magic-link token, so recovery verification always
+      // failed. The sign-up OTP keeps `signInWithOtp` (paired
+      // with `OtpType.signup`) — only the recovery pairing was
+      // wrong.
+      //
+      // Unknown emails: GoTrue answers the /recover endpoint with
+      // success even when the address has no account — it never
+      // reveals whether an address is registered. The flow
+      // therefore advances to the code step either way, and an
+      // unknown address simply never receives a code. That is the
+      // standard password-reset behaviour, not an error to show.
+      await _client.auth.resetPasswordForEmail(email);
     } on supabase.AuthException catch (e) {
       throw AuthException(e.message);
     }

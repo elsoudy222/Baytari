@@ -71,6 +71,32 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  /// A stored profile counts as "wizard-complete" when it has a
+  /// username: the username step is the last data the wizard
+  /// collects, so a stored username means the wizard ran to the
+  /// end in a past session. Used ONLY when restoring a session or
+  /// signing in — during a live wizard run the flag stays false
+  /// until [markProfileCompleted] (see [AuthState.profileCompleted]),
+  /// because deriving it from the profile there would redirect the
+  /// user away from the confirmation screen.
+  static bool _hasCompletedProfile(Profile? profile) {
+    final String? username = profile?.username;
+    return username != null && username.isNotEmpty;
+  }
+
+  /// Marks the sign-up wizard as finished. Called by the register
+  /// screen when the user leaves the confirmation step ("Go to
+  /// Home"): only then may the router guard send a signed-in user
+  /// away from `/register`. It is deliberately NOT set by
+  /// [completeProfile] — the confirmation screen itself lives on
+  /// `/register`, so setting it there would redirect the user to
+  /// Home before they ever saw it.
+  void markProfileCompleted() {
+    if (!state.profileCompleted) {
+      emit(state.copyWith(profileCompleted: true));
+    }
+  }
+
   /// Restores the session at startup. Called once by `BaytariApp`.
   /// Supabase persists the session on the device, so a returning
   /// user is authenticated again without typing a password.
@@ -92,6 +118,9 @@ class AuthCubit extends Cubit<AuthState> {
             state.copyWith(
               status: AuthStatus.authenticated,
               profile: value,
+              // No live wizard on a session restore: the stored
+              // profile tells whether the wizard finished before.
+              profileCompleted: _hasCompletedProfile(value),
               clearError: true,
             ),
           );
@@ -149,6 +178,9 @@ class AuthCubit extends Cubit<AuthState> {
             state.copyWith(
               status: AuthStatus.authenticated,
               profile: value,
+              // The wizard just started (confirmation OFF): the
+              // licence / username steps still lie ahead.
+              profileCompleted: false,
               clearError: true,
             ),
           );
@@ -179,6 +211,9 @@ class AuthCubit extends Cubit<AuthState> {
           state.copyWith(
             status: AuthStatus.authenticated,
             profile: value,
+            // A returning user signing in: the stored profile tells
+            // whether the wizard finished in a past session.
+            profileCompleted: _hasCompletedProfile(value),
             clearError: true,
           ),
         );
@@ -333,6 +368,9 @@ class AuthCubit extends Cubit<AuthState> {
             status: AuthStatus.authenticated,
             profile: value,
             action: AuthAction.otpVerified,
+            // The wizard continues to the username step — the
+            // profile is not complete yet.
+            profileCompleted: false,
             clearError: true,
           ),
         );
@@ -443,6 +481,10 @@ class AuthCubit extends Cubit<AuthState> {
             status: AuthStatus.authenticated,
             profile: value,
             action: AuthAction.profileCompleted,
+            // Deliberately still false: the confirmation screen
+            // lives on `/register`, and only the wizard itself may
+            // mark the profile complete (see [markProfileCompleted]).
+            profileCompleted: false,
             clearError: true,
           ),
         );
