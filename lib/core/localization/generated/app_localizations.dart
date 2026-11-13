@@ -859,6 +859,444 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'and'**
   String get termsAnd;
+
+  /// No description provided for @homeWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome,'**
+  String get homeWelcome;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchHint;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @filterStray.
+  ///
+  /// In en, this message translates to:
+  /// **'Stray'**
+  String get filterStray;
+
+  /// No description provided for @filterLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost'**
+  String get filterLost;
+
+  /// No description provided for @filterAdoption.
+  ///
+  /// In en, this message translates to:
+  /// **'Adoption'**
+  String get filterAdoption;
+
+  /// No description provided for @reportAnimalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report an Animal'**
+  String get reportAnimalTitle;
+
+  /// No description provided for @reportAnimalDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us locate and assist stray animals. Report an animal\'s sighting or condition here.'**
+  String get reportAnimalDescription;
+
+  /// No description provided for @reportAnimalButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Animal'**
+  String get reportAnimalButton;
+
+  /// No description provided for @shareStatusUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Status Update'**
+  String get shareStatusUpdate;
+
+  /// No description provided for @help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get help;
+
+  /// No description provided for @comment.
+  ///
+  /// In en, this message translates to:
+  /// **'comment'**
+  String get comment;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @showMore.
+  ///
+  /// In en, this message translates to:
+  /// **'show more'**
+  String get showMore;
+
+  /// No description provided for @showLess.
+  ///
+  /// In en, this message translates to:
+  /// **'show less'**
+  String get showLess;
+
+  /// No description provided for @categoryStrayAnimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Stray Animal'**
+  String get categoryStrayAnimal;
+
+  /// No description provided for @categoryLostPet.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost Pet'**
+  String get categoryLostPet;
+
+  /// No description provided for @categoryAdoptable.
+  ///
+  /// In en, this message translates to:
+  /// **'Adoptable'**
+  String get categoryAdoptable;
+
+  /// No description provided for @priorityUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get priorityUrgent;
+
+  /// No description provided for @priorityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High Priority'**
+  String get priorityHigh;
+
+  /// No description provided for @priorityMid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mid Priority'**
+  String get priorityMid;
+
+  /// No description provided for @priorityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Priority'**
+  String get priorityLow;
+
+  /// No description provided for @animalDog.
+  ///
+  /// In en, this message translates to:
+  /// **'Dog'**
+  String get animalDog;
+
+  /// No description provided for @animalCat.
+  ///
+  /// In en, this message translates to:
+  /// **'Cat'**
+  String get animalCat;
+
+  /// No description provided for @animalOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get animalOther;
+
+  /// No description provided for @statusSighted.
+  ///
+  /// In en, this message translates to:
+  /// **'Sighted'**
+  String get statusSighted;
+
+  /// No description provided for @statusRescued.
+  ///
+  /// In en, this message translates to:
+  /// **'Rescued'**
+  String get statusRescued;
+
+  /// No description provided for @statusInShelter.
+  ///
+  /// In en, this message translates to:
+  /// **'In Shelter'**
+  String get statusInShelter;
+
+  /// No description provided for @statusAtVet.
+  ///
+  /// In en, this message translates to:
+  /// **'at VET'**
+  String get statusAtVet;
+
+  /// No description provided for @statusCouldntFind.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t find'**
+  String get statusCouldntFind;
+
+  /// No description provided for @statusInSafeHands.
+  ///
+  /// In en, this message translates to:
+  /// **'In Safe Hands'**
+  String get statusInSafeHands;
+
+  /// No description provided for @statusNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Found'**
+  String get statusNotFound;
+
+  /// No description provided for @statusInterested.
+  ///
+  /// In en, this message translates to:
+  /// **'Interested'**
+  String get statusInterested;
+
+  /// No description provided for @statusReadyToAdopt.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Adopt'**
+  String get statusReadyToAdopt;
+
+  /// No description provided for @statusInProcess.
+  ///
+  /// In en, this message translates to:
+  /// **'In Process'**
+  String get statusInProcess;
+
+  /// No description provided for @statusAdopted.
+  ///
+  /// In en, this message translates to:
+  /// **'Adopted'**
+  String get statusAdopted;
+
+  /// No description provided for @mapTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get mapTab;
+
+  /// No description provided for @communityTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get communityTab;
+
+  /// No description provided for @vetsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Vets'**
+  String get vetsTab;
+
+  /// No description provided for @sheltersTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelters'**
+  String get sheltersTab;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
+
+  /// No description provided for @comingSoonMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This section is coming soon.'**
+  String get comingSoonMessage;
+
+  /// No description provided for @shareComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing is coming soon'**
+  String get shareComingSoon;
+
+  /// No description provided for @noReports.
+  ///
+  /// In en, this message translates to:
+  /// **'No reports yet'**
+  String get noReports;
+
+  /// No description provided for @noReportsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to report an animal that needs help.'**
+  String get noReportsMessage;
+
+  /// No description provided for @filterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get filterTitle;
+
+  /// No description provided for @filterPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get filterPriority;
+
+  /// No description provided for @filterAnimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal type'**
+  String get filterAnimal;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clearFilters;
+
+  /// No description provided for @applyFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get applyFilters;
+
+  /// No description provided for @createReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report an Animal'**
+  String get createReportTitle;
+
+  /// No description provided for @categoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryLabel;
+
+  /// No description provided for @priorityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get priorityLabel;
+
+  /// No description provided for @animalTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal type'**
+  String get animalTypeLabel;
+
+  /// No description provided for @descriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLabel;
+
+  /// No description provided for @descriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the animal, its condition and where you saw it...'**
+  String get descriptionHint;
+
+  /// No description provided for @locationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get locationLabel;
+
+  /// No description provided for @locationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Street, area, city'**
+  String get locationHint;
+
+  /// No description provided for @addPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos'**
+  String get addPhotos;
+
+  /// No description provided for @submitReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Report'**
+  String get submitReport;
+
+  /// No description provided for @reportCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Report submitted. Thank you for helping!'**
+  String get reportCreated;
+
+  /// No description provided for @formIncomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose a category, priority and animal type'**
+  String get formIncomplete;
+
+  /// No description provided for @descriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please describe the animal'**
+  String get descriptionRequired;
+
+  /// No description provided for @commentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get commentsTitle;
+
+  /// No description provided for @noCommentsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet. Be the first to help!'**
+  String get noCommentsYet;
+
+  /// No description provided for @writeComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a comment ...'**
+  String get writeComment;
+
+  /// No description provided for @like.
+  ///
+  /// In en, this message translates to:
+  /// **'Like'**
+  String get like;
+
+  /// No description provided for @unlike.
+  ///
+  /// In en, this message translates to:
+  /// **'unlike'**
+  String get unlike;
+
+  /// No description provided for @reply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get reply;
+
+  /// No description provided for @helpersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} helpers'**
+  String helpersCount(int count);
+
+  /// No description provided for @commentsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} comments'**
+  String commentsCount(int count);
+
+  /// No description provided for @commentsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'{author} and {count} Helpers'**
+  String commentsHeader(String author, int count);
+
+  /// No description provided for @replyingTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Replying to {name}'**
+  String replyingTo(String name);
 }
 
 class _AppLocalizationsDelegate

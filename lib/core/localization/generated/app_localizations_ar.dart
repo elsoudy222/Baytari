@@ -407,4 +407,232 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get termsAnd => 'و';
+
+  @override
+  String get homeWelcome => 'أهلًا بك،';
+
+  @override
+  String get searchHint => 'ابحث';
+
+  @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get filterStray => 'ضال';
+
+  @override
+  String get filterLost => 'مفقود';
+
+  @override
+  String get filterAdoption => 'تبنّي';
+
+  @override
+  String get reportAnimalTitle => 'بلّغ عن حيوان';
+
+  @override
+  String get reportAnimalDescription =>
+      'ساعدنا في العثور على الحيوانات الضالة ومساعدتها. بلّغ عن مشاهدة حيوان أو حالته هنا.';
+
+  @override
+  String get reportAnimalButton => 'بلّغ عن حيوان';
+
+  @override
+  String get shareStatusUpdate => 'شارك آخر المستجدات';
+
+  @override
+  String get help => 'ساعِد';
+
+  @override
+  String get comment => 'تعليق';
+
+  @override
+  String get send => 'إرسال';
+
+  @override
+  String get showMore => 'عرض المزيد';
+
+  @override
+  String get showLess => 'عرض أقل';
+
+  @override
+  String get categoryStrayAnimal => 'حيوان ضال';
+
+  @override
+  String get categoryLostPet => 'حيوان مفقود';
+
+  @override
+  String get categoryAdoptable => 'متاح للتبنّي';
+
+  @override
+  String get priorityUrgent => 'عاجل';
+
+  @override
+  String get priorityHigh => 'أولوية عالية';
+
+  @override
+  String get priorityMid => 'أولوية متوسطة';
+
+  @override
+  String get priorityLow => 'أولوية منخفضة';
+
+  @override
+  String get animalDog => 'كلب';
+
+  @override
+  String get animalCat => 'قطة';
+
+  @override
+  String get animalOther => 'آخر';
+
+  @override
+  String get statusSighted => 'تمت مشاهدته';
+
+  @override
+  String get statusRescued => 'تم إنقاذه';
+
+  @override
+  String get statusInShelter => 'في الملجأ';
+
+  @override
+  String get statusAtVet => 'عند الطبيب البيطري';
+
+  @override
+  String get statusCouldntFind => 'لم أجده';
+
+  @override
+  String get statusInSafeHands => 'في أيدٍ أمينة';
+
+  @override
+  String get statusNotFound => 'غير موجود';
+
+  @override
+  String get statusInterested => 'مهتم';
+
+  @override
+  String get statusReadyToAdopt => 'جاهز للتبنّي';
+
+  @override
+  String get statusInProcess => 'قيد التنفيذ';
+
+  @override
+  String get statusAdopted => 'تم تبنّيه';
+
+  @override
+  String get mapTab => 'الخريطة';
+
+  @override
+  String get communityTab => 'المجتمع';
+
+  @override
+  String get vetsTab => 'الأطباء';
+
+  @override
+  String get sheltersTab => 'الملاجئ';
+
+  @override
+  String get comingSoon => 'قريبًا';
+
+  @override
+  String get comingSoonMessage => 'هذا القسم قادم قريبًا.';
+
+  @override
+  String get shareComingSoon => 'المشاركة قادمة قريبًا';
+
+  @override
+  String get noReports => 'لا توجد بلاغات بعد';
+
+  @override
+  String get noReportsMessage => 'كن أول من يبلّغ عن حيوان يحتاج المساعدة.';
+
+  @override
+  String get filterTitle => 'تصفية';
+
+  @override
+  String get filterPriority => 'الأولوية';
+
+  @override
+  String get filterAnimal => 'نوع الحيوان';
+
+  @override
+  String get clearFilters => 'مسح';
+
+  @override
+  String get applyFilters => 'تطبيق';
+
+  @override
+  String get createReportTitle => 'بلّغ عن حيوان';
+
+  @override
+  String get categoryLabel => 'الفئة';
+
+  @override
+  String get priorityLabel => 'الأولوية';
+
+  @override
+  String get animalTypeLabel => 'نوع الحيوان';
+
+  @override
+  String get descriptionLabel => 'الوصف';
+
+  @override
+  String get descriptionHint => 'صِف الحيوان وحالته والمكان الذي رأيته فيه...';
+
+  @override
+  String get locationLabel => 'المكان';
+
+  @override
+  String get locationHint => 'الشارع، المنطقة، المدينة';
+
+  @override
+  String get addPhotos => 'أضف صورًا';
+
+  @override
+  String get submitReport => 'إرسال البلاغ';
+
+  @override
+  String get reportCreated => 'تم إرسال البلاغ. شكرًا لمساعدتك!';
+
+  @override
+  String get formIncomplete => 'من فضلك اختر الفئة والأولوية ونوع الحيوان';
+
+  @override
+  String get descriptionRequired => 'من فضلك صِف الحيوان';
+
+  @override
+  String get commentsTitle => 'التعليقات';
+
+  @override
+  String get noCommentsYet => 'لا توجد تعليقات بعد. كن أول من يساعد!';
+
+  @override
+  String get writeComment => 'اكتب تعليقًا ...';
+
+  @override
+  String get like => 'أعجبني';
+
+  @override
+  String get unlike => 'إلغاء الإعجاب';
+
+  @override
+  String get reply => 'رد';
+
+  @override
+  String helpersCount(int count) {
+    return '$count مساعد';
+  }
+
+  @override
+  String commentsCount(int count) {
+    return '$count تعليق';
+  }
+
+  @override
+  String commentsHeader(String author, int count) {
+    return '$author و $count مساعد';
+  }
+
+  @override
+  String replyingTo(String name) {
+    return 'رد على $name';
+  }
 }

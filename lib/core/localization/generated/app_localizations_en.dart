@@ -409,4 +409,235 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsAnd => 'and';
+
+  @override
+  String get homeWelcome => 'Welcome,';
+
+  @override
+  String get searchHint => 'Search';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterStray => 'Stray';
+
+  @override
+  String get filterLost => 'Lost';
+
+  @override
+  String get filterAdoption => 'Adoption';
+
+  @override
+  String get reportAnimalTitle => 'Report an Animal';
+
+  @override
+  String get reportAnimalDescription =>
+      'Help us locate and assist stray animals. Report an animal\'s sighting or condition here.';
+
+  @override
+  String get reportAnimalButton => 'Report Animal';
+
+  @override
+  String get shareStatusUpdate => 'Share Status Update';
+
+  @override
+  String get help => 'Help';
+
+  @override
+  String get comment => 'comment';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get showMore => 'show more';
+
+  @override
+  String get showLess => 'show less';
+
+  @override
+  String get categoryStrayAnimal => 'Stray Animal';
+
+  @override
+  String get categoryLostPet => 'Lost Pet';
+
+  @override
+  String get categoryAdoptable => 'Adoptable';
+
+  @override
+  String get priorityUrgent => 'Urgent';
+
+  @override
+  String get priorityHigh => 'High Priority';
+
+  @override
+  String get priorityMid => 'Mid Priority';
+
+  @override
+  String get priorityLow => 'Low Priority';
+
+  @override
+  String get animalDog => 'Dog';
+
+  @override
+  String get animalCat => 'Cat';
+
+  @override
+  String get animalOther => 'Other';
+
+  @override
+  String get statusSighted => 'Sighted';
+
+  @override
+  String get statusRescued => 'Rescued';
+
+  @override
+  String get statusInShelter => 'In Shelter';
+
+  @override
+  String get statusAtVet => 'at VET';
+
+  @override
+  String get statusCouldntFind => 'Couldn\'t find';
+
+  @override
+  String get statusInSafeHands => 'In Safe Hands';
+
+  @override
+  String get statusNotFound => 'Not Found';
+
+  @override
+  String get statusInterested => 'Interested';
+
+  @override
+  String get statusReadyToAdopt => 'Ready to Adopt';
+
+  @override
+  String get statusInProcess => 'In Process';
+
+  @override
+  String get statusAdopted => 'Adopted';
+
+  @override
+  String get mapTab => 'Map';
+
+  @override
+  String get communityTab => 'Community';
+
+  @override
+  String get vetsTab => 'Vets';
+
+  @override
+  String get sheltersTab => 'Shelters';
+
+  @override
+  String get comingSoon => 'Coming soon';
+
+  @override
+  String get comingSoonMessage => 'This section is coming soon.';
+
+  @override
+  String get shareComingSoon => 'Sharing is coming soon';
+
+  @override
+  String get noReports => 'No reports yet';
+
+  @override
+  String get noReportsMessage =>
+      'Be the first to report an animal that needs help.';
+
+  @override
+  String get filterTitle => 'Filter';
+
+  @override
+  String get filterPriority => 'Priority';
+
+  @override
+  String get filterAnimal => 'Animal type';
+
+  @override
+  String get clearFilters => 'Clear';
+
+  @override
+  String get applyFilters => 'Apply';
+
+  @override
+  String get createReportTitle => 'Report an Animal';
+
+  @override
+  String get categoryLabel => 'Category';
+
+  @override
+  String get priorityLabel => 'Priority';
+
+  @override
+  String get animalTypeLabel => 'Animal type';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get descriptionHint =>
+      'Describe the animal, its condition and where you saw it...';
+
+  @override
+  String get locationLabel => 'Location';
+
+  @override
+  String get locationHint => 'Street, area, city';
+
+  @override
+  String get addPhotos => 'Add photos';
+
+  @override
+  String get submitReport => 'Submit Report';
+
+  @override
+  String get reportCreated => 'Report submitted. Thank you for helping!';
+
+  @override
+  String get formIncomplete =>
+      'Please choose a category, priority and animal type';
+
+  @override
+  String get descriptionRequired => 'Please describe the animal';
+
+  @override
+  String get commentsTitle => 'Comments';
+
+  @override
+  String get noCommentsYet => 'No comments yet. Be the first to help!';
+
+  @override
+  String get writeComment => 'Write a comment ...';
+
+  @override
+  String get like => 'Like';
+
+  @override
+  String get unlike => 'unlike';
+
+  @override
+  String get reply => 'Reply';
+
+  @override
+  String helpersCount(int count) {
+    return '$count helpers';
+  }
+
+  @override
+  String commentsCount(int count) {
+    return '$count comments';
+  }
+
+  @override
+  String commentsHeader(String author, int count) {
+    return '$author and $count Helpers';
+  }
+
+  @override
+  String replyingTo(String name) {
+    return 'Replying to $name';
+  }
 }
