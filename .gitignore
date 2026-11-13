@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Local Supabase keys (never commit the real key — copy
+# supabase_keys.example.json to supabase_keys.json and fill it in)
+supabase_keys.json

@@ -1,0 +1,1 @@
+{"configurations":[{"args":["--dart-define-from-file","supabase_keys.json"],"name":"Baytari","program":"lib/main.dart","request":"launch","type":"dart"}],"version":"0.2.0"}
