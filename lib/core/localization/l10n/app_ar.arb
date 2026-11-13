@@ -126,5 +126,109 @@
   "otpSent": "تم إرسال رمز التحقق",
   "licenseRequired": "من فضلك ارفع صورة رخصتك للمتابعة",
   "emailOnlyOtp": "رموز التحقق تُرسل إلى بريدك الإلكتروني",
-  "termsAnd": "و"
+  "termsAnd": "و",
+  "homeWelcome": "أهلًا بك،",
+  "searchHint": "ابحث",
+  "filterAll": "الكل",
+  "filterStray": "ضال",
+  "filterLost": "مفقود",
+  "filterAdoption": "تبنّي",
+  "reportAnimalTitle": "بلّغ عن حيوان",
+  "reportAnimalDescription": "ساعدنا في العثور على الحيوانات الضالة ومساعدتها. بلّغ عن مشاهدة حيوان أو حالته هنا.",
+  "reportAnimalButton": "بلّغ عن حيوان",
+  "shareStatusUpdate": "شارك آخر المستجدات",
+  "help": "ساعِد",
+  "comment": "تعليق",
+  "send": "إرسال",
+  "showMore": "عرض المزيد",
+  "showLess": "عرض أقل",
+  "categoryStrayAnimal": "حيوان ضال",
+  "categoryLostPet": "حيوان مفقود",
+  "categoryAdoptable": "متاح للتبنّي",
+  "priorityUrgent": "عاجل",
+  "priorityHigh": "أولوية عالية",
+  "priorityMid": "أولوية متوسطة",
+  "priorityLow": "أولوية منخفضة",
+  "animalDog": "كلب",
+  "animalCat": "قطة",
+  "animalOther": "آخر",
+  "statusSighted": "تمت مشاهدته",
+  "statusRescued": "تم إنقاذه",
+  "statusInShelter": "في الملجأ",
+  "statusAtVet": "عند الطبيب البيطري",
+  "statusCouldntFind": "لم أجده",
+  "statusInSafeHands": "في أيدٍ أمينة",
+  "statusNotFound": "غير موجود",
+  "statusInterested": "مهتم",
+  "statusReadyToAdopt": "جاهز للتبنّي",
+  "statusInProcess": "قيد التنفيذ",
+  "statusAdopted": "تم تبنّيه",
+  "mapTab": "الخريطة",
+  "communityTab": "المجتمع",
+  "vetsTab": "الأطباء",
+  "sheltersTab": "الملاجئ",
+  "comingSoon": "قريبًا",
+  "comingSoonMessage": "هذا القسم قادم قريبًا.",
+  "shareComingSoon": "المشاركة قادمة قريبًا",
+  "noReports": "لا توجد بلاغات بعد",
+  "noReportsMessage": "كن أول من يبلّغ عن حيوان يحتاج المساعدة.",
+  "filterTitle": "تصفية",
+  "filterPriority": "الأولوية",
+  "filterAnimal": "نوع الحيوان",
+  "clearFilters": "مسح",
+  "applyFilters": "تطبيق",
+  "createReportTitle": "بلّغ عن حيوان",
+  "categoryLabel": "الفئة",
+  "priorityLabel": "الأولوية",
+  "animalTypeLabel": "نوع الحيوان",
+  "descriptionLabel": "الوصف",
+  "descriptionHint": "صِف الحيوان وحالته والمكان الذي رأيته فيه...",
+  "locationLabel": "المكان",
+  "locationHint": "الشارع، المنطقة، المدينة",
+  "addPhotos": "أضف صورًا",
+  "submitReport": "إرسال البلاغ",
+  "reportCreated": "تم إرسال البلاغ. شكرًا لمساعدتك!",
+  "formIncomplete": "من فضلك اختر الفئة والأولوية ونوع الحيوان",
+  "descriptionRequired": "من فضلك صِف الحيوان",
+  "commentsTitle": "التعليقات",
+  "noCommentsYet": "لا توجد تعليقات بعد. كن أول من يساعد!",
+  "writeComment": "اكتب تعليقًا ...",
+  "like": "أعجبني",
+  "unlike": "إلغاء الإعجاب",
+  "reply": "رد",
+  "@helpersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "helpersCount": "{count} مساعد",
+  "@commentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commentsCount": "{count} تعليق",
+  "@commentsHeader": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commentsHeader": "{author} و {count} مساعد",
+  "@replyingTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "replyingTo": "رد على {name}"
 }

@@ -53,7 +53,9 @@ import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/profile_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
-import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/home/presentation/screens/create_report_screen.dart';
+import '../../features/home/presentation/screens/home_shell_screen.dart';
+import '../../features/home/presentation/screens/report_comments_screen.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../../features/onboarding/presentation/screens/get_started_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
@@ -91,6 +93,15 @@ abstract final class AppRoutes {
   static const String forgotPasswordNewPassword =
       '/forgot-password/new-password';
   static const String forgotPasswordSuccess = '/forgot-password/success';
+
+  /// The Create Report form. NOT public: guests are sent to
+  /// Login (only signed-in users can report).
+  static const String createReport = '/home/report/new';
+
+  /// The comments of one report. Public, like the feed itself:
+  /// guests may read comments without signing in.
+  static String reportComments(String reportId) =>
+      '/home/report/$reportId/comments';
 }
 
 abstract final class AppRouter {
@@ -112,6 +123,12 @@ abstract final class AppRouter {
           return null;
         }
         final String location = state.matchedLocation;
+        // The comments of a report (/home/report/:id/comments)
+        // are public like the feed; creating a report is not
+        // (guests are sent to Login).
+        final bool isReportComments =
+            location.startsWith('/home/report/') &&
+            location.endsWith('/comments');
         // Public routes: the guard never redirects away from them.
         final bool isPublic =
             location == AppRoutes.splash ||
@@ -122,7 +139,8 @@ abstract final class AppRouter {
             location == AppRoutes.forgotPassword ||
             location == AppRoutes.forgotPasswordVerify ||
             location == AppRoutes.forgotPasswordNewPassword ||
-            location == AppRoutes.forgotPasswordSuccess;
+            location == AppRoutes.forgotPasswordSuccess ||
+            isReportComments;
         final bool onAuthRoute =
             location == AppRoutes.login ||
             location == AppRoutes.register ||
@@ -171,7 +189,17 @@ abstract final class AppRouter {
         ),
         GoRoute(
           path: AppRoutes.home,
-          builder: (context, state) => const HomeScreen(),
+          builder: (context, state) => const HomeShellScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.createReport,
+          builder: (context, state) => const CreateReportScreen(),
+        ),
+        GoRoute(
+          path: '/home/report/:id/comments',
+          builder: (context, state) => ReportCommentsScreen(
+            reportId: state.pathParameters['id'] ?? '',
+          ),
         ),
         GoRoute(
           path: AppRoutes.settings,
