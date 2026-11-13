@@ -30,7 +30,8 @@
 /// Supabase email confirmation is ON, `signUp` creates the
 /// account but returns NO session, so Storage (which requires a
 /// signed-in user) cannot accept the licence yet. The wizard
-/// therefore holds the photo bytes and uploads them right after
+/// therefore shows the licence step BEFORE the OTP (vet/shelter
+/// only), holds the photo bytes, and uploads them right after
 /// the OTP is verified (when the session exists). When
 /// confirmation is OFF the session exists immediately and the
 /// licence uploads at step 4. Either way the user never re-picks
@@ -228,14 +229,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     switch (state.status) {
       case AuthStatus.awaitingConfirmation:
-        // Account created, email confirmation ON: send the OTP
-        // code and show the code boxes.
-        if (_step == _SignUpStep.password && !_otpRequested) {
-          _otpRequested = true;
-          context.read<AuthCubit>().requestSignupOtp(
-            email: _emailController.text.trim(),
-          );
-          setState(() => _step = _SignUpStep.otp);
+        // Account created, email confirmation ON. Vet / shelter
+        // accounts must verify their licence BEFORE the OTP: the
+        // licence step's Next requests the OTP itself when there
+        // is no session yet, so the flow becomes licence -> OTP ->
+        // username -> done. Community members skip the licence
+        // and go straight to the code boxes.
+        if (_step == _SignUpStep.password) {
+          if (_needsLicense) {
+            setState(() => _step = _SignUpStep.license);
+          } else if (!_otpRequested) {
+            _otpRequested = true;
+            context.read<AuthCubit>().requestSignupOtp(
+              email: _emailController.text.trim(),
+            );
+            setState(() => _step = _SignUpStep.otp);
+          }
         }
       case AuthStatus.authenticated:
         if (_step == _SignUpStep.password) {
@@ -298,10 +307,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _SignUpStep.info => _SignUpStep.role,
         _SignUpStep.password => _SignUpStep.info,
         _SignUpStep.license => _SignUpStep.password,
-        _SignUpStep.otp => _SignUpStep.password,
-        _SignUpStep.username => _needsLicense
+        // Back from the OTP returns to the licence for vet/shelter
+        // (confirmation ON reaches the OTP through the licence),
+        // and to the password for community members.
+        _SignUpStep.otp => _needsLicense
             ? _SignUpStep.license
             : _SignUpStep.password,
+        // Back from the username returns to the OTP when a code
+        // was requested (confirmation ON), otherwise to the
+        // licence for vet/shelter (confirmation OFF skips OTP).
+        _SignUpStep.username => _otpRequested
+            ? _SignUpStep.otp
+            : _needsLicense
+                ? _SignUpStep.license
+                : _SignUpStep.password,
         _SignUpStep.done => _SignUpStep.username,
       };
     });
@@ -591,6 +610,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   }
                   // Confirmation ON: no session yet — the photo is
                   // held and uploaded right after OTP verification.
+                  // Mark the OTP as requested: the listener must not
+                  // send it a second time for the same email.
+                  _otpRequested = true;
                   setState(() => _step = _SignUpStep.otp);
                   context.read<AuthCubit>().requestSignupOtp(
                     email: _emailController.text.trim(),
@@ -887,7 +909,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         const SizedBox(height: 24),
         AppButton(
           label: l10n.goToHome,
-          onPressed: () => context.go(AppRoutes.home),
+          onPressed: () {
+            // The wizard is finished: only now may the router
+            // guard send a signed-in user away from `/register`.
+            context.read<AuthCubit>().markProfileCompleted();
+            context.go(AppRoutes.home);
+          },
         ),
       ],
     );

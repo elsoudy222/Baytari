@@ -28,7 +28,14 @@
 /// - `unauthenticated` / `awaitingConfirmation`: any route except the
 ///   public ones redirects to `/login` — unless the user is a guest.
 /// - `authenticated`: `/login`, `/register` and `/get-started`
-///   redirect to `/` (a signed-in user has no business on those).
+///   redirect to `/` (a signed-in user has no business on those)
+///   — EXCEPT `/register` while the sign-up wizard is still
+///   running. The wizard emits `authenticated` mid-flow (OTP
+///   verified, username saved) while it is still on `/register`,
+///   so the guard exempts that route until the wizard itself
+///   marks the profile complete ([AuthState.profileCompleted]).
+///   A signed-in user whose profile IS complete is still sent
+///   from `/register` (and `/login`, `/get-started`) to `/`.
 ///
 /// The router re-evaluates the redirect whenever either Cubit's
 /// state changes: [_CubitRefresh] forwards each Cubit's stream to
@@ -123,6 +130,17 @@ abstract final class AppRouter {
             location == AppRoutes.forgotPasswordVerify ||
             location == AppRoutes.forgotPasswordNewPassword ||
             location == AppRoutes.forgotPasswordSuccess;
+        // The sign-up wizard lives on `/register` and emits
+        // `authenticated` mid-flow — while it is still running the
+        // user must stay on the wizard, so an authenticated user
+        // with an incomplete profile is never redirected away
+        // from `/register`.
+        final bool wizardInProgress =
+            location == AppRoutes.register &&
+            !authCubit.state.profileCompleted;
+        if (wizardInProgress) {
+          return null;
+        }
         return switch (authCubit.state.status) {
           // Session check still running: do not redirect yet.
           AuthStatus.initial || AuthStatus.loading => null,

@@ -107,6 +107,102 @@ void main() {
     expect(cubit.state.status, AuthStatus.awaitingConfirmation);
   });
 
+  test('signUp with immediate session leaves the profile incomplete',
+      () async {
+    await cubit.signUp(
+      email: 'new@example.com',
+      password: 'password123',
+      fullName: 'New User',
+      role: testProfile.role,
+    );
+    expect(cubit.state.status, AuthStatus.authenticated);
+    // The wizard just started (licence / username steps ahead),
+    // so the router must not redirect away from `/register` yet.
+    expect(cubit.state.profileCompleted, isFalse);
+  });
+
+  test('checkSession marks a profile with a username as complete',
+      () async {
+    repository.profileToReturn = testProfile.copyWith(
+      username: 'testuser',
+    );
+    await cubit.checkSession();
+    expect(cubit.state.status, AuthStatus.authenticated);
+    expect(cubit.state.profileCompleted, isTrue);
+  });
+
+  test('checkSession leaves a profile without a username incomplete',
+      () async {
+    await cubit.checkSession();
+    expect(cubit.state.status, AuthStatus.authenticated);
+    expect(cubit.state.profile?.username, isNull);
+    expect(cubit.state.profileCompleted, isFalse);
+  });
+
+  test('signIn derives completion from the stored username', () async {
+    repository.profileToReturn = testProfile.copyWith(
+      username: 'testuser',
+    );
+    await cubit.signIn(email: 'test@example.com', password: 'password123');
+    expect(cubit.state.status, AuthStatus.authenticated);
+    expect(cubit.state.profileCompleted, isTrue);
+  });
+
+  test('signIn leaves a profile without a username incomplete', () async {
+    await cubit.signIn(email: 'test@example.com', password: 'password123');
+    expect(cubit.state.status, AuthStatus.authenticated);
+    expect(cubit.state.profileCompleted, isFalse);
+  });
+
+  test('verifySignupOtp leaves the profile incomplete', () async {
+    await cubit.verifySignupOtp(
+      email: 'new@example.com',
+      token: '123456',
+    );
+    expect(cubit.state.status, AuthStatus.authenticated);
+    expect(cubit.state.action, AuthAction.otpVerified);
+    // The username step still lies ahead.
+    expect(cubit.state.profileCompleted, isFalse);
+  });
+
+  test('completeProfile does NOT mark the profile complete', () async {
+    await cubit.signUp(
+      email: 'new@example.com',
+      password: 'password123',
+      fullName: 'New User',
+      role: testProfile.role,
+    );
+    await cubit.completeProfile(username: 'newuser');
+    expect(cubit.state.status, AuthStatus.authenticated);
+    expect(cubit.state.action, AuthAction.profileCompleted);
+    // The confirmation screen lives on `/register`: only the
+    // wizard itself may flip the flag (see markProfileCompleted).
+    expect(cubit.state.profileCompleted, isFalse);
+  });
+
+  test('markProfileCompleted flips the flag', () async {
+    await cubit.signUp(
+      email: 'new@example.com',
+      password: 'password123',
+      fullName: 'New User',
+      role: testProfile.role,
+    );
+    expect(cubit.state.profileCompleted, isFalse);
+    cubit.markProfileCompleted();
+    expect(cubit.state.profileCompleted, isTrue);
+  });
+
+  test('updateProfile preserves the completion flag', () async {
+    repository.profileToReturn = testProfile.copyWith(
+      username: 'testuser',
+    );
+    await cubit.signIn(email: 'test@example.com', password: 'password123');
+    expect(cubit.state.profileCompleted, isTrue);
+    await cubit.updateProfile(fullName: 'Renamed User');
+    expect(cubit.state.status, AuthStatus.authenticated);
+    expect(cubit.state.profileCompleted, isTrue);
+  });
+
   test('signOut clears the profile and the session', () async {
     await cubit.signIn(email: 'test@example.com', password: 'password123');
     await cubit.signOut();
