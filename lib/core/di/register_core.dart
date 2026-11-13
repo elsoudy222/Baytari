@@ -26,7 +26,18 @@ void registerCore(GetIt sl, SharedPreferences prefs) {
     () => AppSettingsService(sl<SharedPreferences>()),
   );
   sl.registerLazySingleton<SupabaseService>(() => SupabaseService());
-  sl.registerLazySingleton<ApiClient>(() => ApiClient());
+  // ApiClient is registered after both services it depends on: the
+  // AuthInterceptor needs SupabaseService (access token) and the
+  // LanguageInterceptor needs AppSettingsService (saved locale).
+  // Both are passed in here so the interceptors are always active in
+  // production; Supabase Auth/DB calls still use supabase_flutter
+  // directly and never go through Dio.
+  sl.registerLazySingleton<ApiClient>(
+    () => ApiClient(
+      supabaseService: sl<SupabaseService>(),
+      settingsService: sl<AppSettingsService>(),
+    ),
+  );
 
   sl.registerFactory<AppCubit>(
     () => AppCubit(sl<AppSettingsService>(), sl<SupabaseService>()),

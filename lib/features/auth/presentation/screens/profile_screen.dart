@@ -18,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/app_button.dart';
-import '../../../../core/widgets/app_toast.dart';
+import '../../../../core/dialogs/app_toast.dart';
 import '../../domain/entities/profile.dart';
 import '../../domain/entities/user_role.dart';
 import '../cubit/auth_cubit.dart';

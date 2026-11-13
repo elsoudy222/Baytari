@@ -53,7 +53,7 @@ import '../../../../core/routing/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/app_button.dart';
-import '../../../../core/widgets/app_toast.dart';
+import '../../../../core/dialogs/app_toast.dart';
 import '../../../../core/widgets/baytari_logo.dart';
 import '../../../onboarding/presentation/widgets/onboarding_illustration.dart';
 import '../../domain/entities/user_role.dart';

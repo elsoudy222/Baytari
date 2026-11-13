@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../constants/api_constants.dart';
 import '../errors/exceptions.dart';
+import '../services/app_settings_service.dart';
+import '../services/supabase_service.dart';
+import 'api_interceptors.dart';
 
 /// Central Dio client. All HTTP traffic in the app goes through this class
 /// (from data sources only — never from widgets or Cubits).
@@ -10,12 +14,28 @@ import '../errors/exceptions.dart';
 /// accessed through the Supabase client, not through Dio. Dio is kept
 /// configured and ready for any future REST endpoints, and its error
 /// mapping is unit-testable through [mapError].
+///
+/// The client is the app's *centralized* ApiService: every request
+/// passes through three interceptors, added in this order —
+/// [AuthInterceptor] (Bearer token when signed in),
+/// [LanguageInterceptor] (`Accept-Language` from the saved locale),
+/// and Dio's [LogInterceptor] (pretty request/response logging,
+/// debug builds only — it prints bodies, so it must never ship in a
+/// release build). See `api_interceptors.dart` for why each one reads
+/// its value at request time instead of once at startup.
 class ApiClient {
   /// The Dio instance is injectable (`Dio? dio`) so tests can pass a
   /// fake Dio — the client never reaches the real network in tests.
-  /// `LogInterceptor` logs requests/responses while developing; it
-  /// prints bodies, so it must be reviewed before a release build.
-  ApiClient({Dio? dio}) : _dio = dio ?? Dio() {
+  ///
+  /// The two services are optional (`?`) so old call sites and tests
+  /// can still build an `ApiClient()` with no arguments: without them
+  /// the interceptors are simply skipped and the client behaves
+  /// exactly as before. In production GetIt always passes both.
+  ApiClient({
+    Dio? dio,
+    SupabaseService? supabaseService,
+    AppSettingsService? settingsService,
+  }) : _dio = dio ?? Dio() {
     _dio.options
       ..connectTimeout = ApiConstants.connectTimeout
       ..receiveTimeout = ApiConstants.receiveTimeout
@@ -23,7 +43,22 @@ class ApiClient {
       ..headers = <String, String>{
         'Content-Type': ApiConstants.jsonContentType,
       };
-    _dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    // Auth first (so the token is on the request before anything
+    // else sees it), then language, then logging last so the log
+    // shows the final headers that actually go out.
+    if (supabaseService != null) {
+      _dio.interceptors.add(AuthInterceptor(supabaseService));
+    }
+    if (settingsService != null) {
+      _dio.interceptors.add(LanguageInterceptor(settingsService));
+    }
+    // `kDebugMode` is true for `flutter run` and `flutter test`,
+    // false for release/profile builds — logging never ships.
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        LogInterceptor(requestBody: true, responseBody: true),
+      );
+    }
   }
 
   final Dio _dio;
