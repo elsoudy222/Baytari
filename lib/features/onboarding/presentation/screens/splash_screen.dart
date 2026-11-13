@@ -77,30 +77,30 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const BaytariLogo(height: 220),
-            const SizedBox(height: 16),
-            // The yellow cat from the Figma loading screen
-            // (`loading_cat.svg`): the loading screen in Figma is
-            // the cat with the orange dot underneath, so the
-            // splash shows both. Flexible so small screens shrink
-            // the art instead of overflowing.
-            Flexible(
-              child: SvgPicture.asset(
-                'assets/images/loading_cat.svg',
-                fit: BoxFit.contain,
-              ),
-            ),
-            const SizedBox(height: 16),
+            // const SizedBox(height: 16),
+            // // The yellow cat from the Figma loading screen
+            // // (`loading_cat.svg`): the loading screen in Figma is
+            // // the cat with the orange dot underneath, so the
+            // // splash shows both. Flexible so small screens shrink
+            // // the art instead of overflowing.
+            // Flexible(
+            //   child: SvgPicture.asset(
+            //     'assets/images/loading_cat.svg',
+            //     fit: BoxFit.contain,
+            //   ),
+            // ),
+            // const SizedBox(height: 16),
             // Orange loading dot, as on the Figma loading screen.
-            const SizedBox(
-              width: 12,
-              height: 12,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.secondary,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
+            // const SizedBox(
+            //   width: 12,
+            //   height: 12,
+            //   child: DecoratedBox(
+            //     decoration: BoxDecoration(
+            //       color: AppColors.secondary,
+            //       shape: BoxShape.circle,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
