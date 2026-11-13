@@ -23,11 +23,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_router.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/baytari_logo.dart';
 import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../cubit/onboarding_cubit.dart';
